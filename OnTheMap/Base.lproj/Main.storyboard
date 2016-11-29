@@ -67,11 +67,14 @@
                                                 <state key="normal" title="Log in with Facebook"/>
                                             </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="350" id="Nbp-eO-jHf"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Fap-Pj-JOu" secondAttribute="trailing" constant="50" id="H2D-7g-sZt"/>
-                                    <constraint firstItem="Fap-Pj-JOu" firstAttribute="leading" secondItem="thj-73-wrM" secondAttribute="leading" constant="50" id="Ing-DJ-2fR"/>
+                                    <constraint firstAttribute="trailing" secondItem="Fap-Pj-JOu" secondAttribute="trailing" priority="999" constant="50" id="H2D-7g-sZt"/>
+                                    <constraint firstItem="Fap-Pj-JOu" firstAttribute="leading" secondItem="thj-73-wrM" secondAttribute="leading" priority="999" constant="50" id="Ing-DJ-2fR"/>
                                 </constraints>
                             </stackView>
                         </subviews>
