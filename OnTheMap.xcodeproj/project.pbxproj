@@ -12,6 +12,11 @@
 		9036DEB11DED7E2800567827 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9036DEAF1DED7E2800567827 /* Main.storyboard */; };
 		9036DEB31DED7E2800567827 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9036DEB21DED7E2800567827 /* Assets.xcassets */; };
 		9036DEB61DED7E2800567827 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9036DEB41DED7E2800567827 /* LaunchScreen.storyboard */; };
+		90F60C401DEDBBDA009BB5D8 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F60C3F1DEDBBDA009BB5D8 /* LoginButton.swift */; };
+		90F60C421DEE1FC1009BB5D8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F60C411DEE1FC1009BB5D8 /* Constants.swift */; };
+		90F60C471DEEF748009BB5D8 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90F60C441DEEF720009BB5D8 /* Roboto-Medium.ttf */; };
+		90F60C481DEEF74A009BB5D8 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90F60C451DEEF720009BB5D8 /* Roboto-Regular.ttf */; };
+		90F60C491DEEF74C009BB5D8 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90F60C461DEEF720009BB5D8 /* Roboto-Thin.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,11 @@
 		9036DEB21DED7E2800567827 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9036DEB51DED7E2800567827 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9036DEB71DED7E2800567827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90F60C3F1DEDBBDA009BB5D8 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
+		90F60C411DEE1FC1009BB5D8 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		90F60C441DEEF720009BB5D8 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		90F60C451DEEF720009BB5D8 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		90F60C461DEEF720009BB5D8 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +64,27 @@
 		9036DEAA1DED7E2800567827 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				90F60C431DEEF708009BB5D8 /* Resources */,
 				9036DEAB1DED7E2800567827 /* AppDelegate.swift */,
 				9036DEAD1DED7E2800567827 /* LoginViewController.swift */,
 				9036DEAF1DED7E2800567827 /* Main.storyboard */,
-				9036DEB21DED7E2800567827 /* Assets.xcassets */,
 				9036DEB41DED7E2800567827 /* LaunchScreen.storyboard */,
 				9036DEB71DED7E2800567827 /* Info.plist */,
+				90F60C3F1DEDBBDA009BB5D8 /* LoginButton.swift */,
+				90F60C411DEE1FC1009BB5D8 /* Constants.swift */,
 			);
 			path = OnTheMap;
+			sourceTree = "<group>";
+		};
+		90F60C431DEEF708009BB5D8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				90F60C441DEEF720009BB5D8 /* Roboto-Medium.ttf */,
+				90F60C451DEEF720009BB5D8 /* Roboto-Regular.ttf */,
+				90F60C461DEEF720009BB5D8 /* Roboto-Thin.ttf */,
+				9036DEB21DED7E2800567827 /* Assets.xcassets */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,7 +147,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90F60C471DEEF748009BB5D8 /* Roboto-Medium.ttf in Resources */,
 				9036DEB61DED7E2800567827 /* LaunchScreen.storyboard in Resources */,
+				90F60C491DEEF74C009BB5D8 /* Roboto-Thin.ttf in Resources */,
+				90F60C481DEEF74A009BB5D8 /* Roboto-Regular.ttf in Resources */,
 				9036DEB31DED7E2800567827 /* Assets.xcassets in Resources */,
 				9036DEB11DED7E2800567827 /* Main.storyboard in Resources */,
 			);
@@ -138,6 +164,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9036DEAE1DED7E2800567827 /* LoginViewController.swift in Sources */,
+				90F60C421DEE1FC1009BB5D8 /* Constants.swift in Sources */,
+				90F60C401DEDBBDA009BB5D8 /* LoginButton.swift in Sources */,
 				9036DEAC1DED7E2800567827 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,7 +290,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J2YTLC2SAF;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OnTheMap",
+				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.brinkop.andre.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -275,7 +308,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J2YTLC2SAF;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OnTheMap",
+				);
 				INFOPLIST_FILE = OnTheMap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.brinkop.andre.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";

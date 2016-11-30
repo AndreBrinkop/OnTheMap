@@ -9,6 +9,14 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -23,47 +31,53 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="thj-73-wrM" userLabel="Login Stack View">
-                                <rect key="frame" x="16" y="179" width="343" height="310.5"/>
+                                <rect key="frame" x="16" y="175.5" width="343" height="316"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="oZx-Ct-BgS" userLabel="Header Stack View">
-                                        <rect key="frame" x="109" y="0.0" width="125" height="120.5"/>
+                                        <rect key="frame" x="109.5" y="0.0" width="124.5" height="120"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UdacityLogo" translatesAutoresizingMaskIntoConstraints="NO" id="4GQ-bP-2bH">
-                                                <rect key="frame" x="22.5" y="0.0" width="80" height="80"/>
+                                                <rect key="frame" x="22" y="0.0" width="80" height="80"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to Udacity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hFc-M5-w4N">
-                                                <rect key="frame" x="0.0" y="100" width="125" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="0.0" y="100" width="124.5" height="20"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Fap-Pj-JOu" userLabel="Form Stack View">
-                                        <rect key="frame" x="50" y="140.5" width="243" height="170"/>
+                                        <rect key="frame" x="40" y="140" width="263" height="176"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kgb-bN-wJe">
-                                                <rect key="frame" x="0.0" y="0.0" width="243" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="263" height="30"/>
                                                 <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aOX-I6-Chh">
-                                                <rect key="frame" x="0.0" y="35" width="243" height="30"/>
+                                                <rect key="frame" x="0.0" y="35" width="263" height="30"/>
                                                 <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aj2-35-bus">
-                                                <rect key="frame" x="0.0" y="70" width="243" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aj2-35-bus" customClass="LoginButton" customModule="OnTheMap" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="70" width="263" height="32"/>
+                                                <color key="backgroundColor" red="0.30196078431372547" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                 <state key="normal" title="Login"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q9n-43-kj1">
-                                                <rect key="frame" x="0.0" y="105" width="243" height="30"/>
-                                                <state key="normal" title="Don't have an account? Sign Up"/>
+                                                <rect key="frame" x="0.0" y="107" width="263" height="32"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                                <state key="normal" title="Don't have an account? Sign Up">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2cH-7R-IEZ">
-                                                <rect key="frame" x="0.0" y="140" width="243" height="30"/>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2cH-7R-IEZ">
+                                                <rect key="frame" x="0.0" y="144" width="263" height="32"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                 <state key="normal" title="Log in with Facebook"/>
                                             </button>
                                         </subviews>
@@ -73,12 +87,12 @@
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Fap-Pj-JOu" secondAttribute="trailing" priority="999" constant="50" id="H2D-7g-sZt"/>
-                                    <constraint firstItem="Fap-Pj-JOu" firstAttribute="leading" secondItem="thj-73-wrM" secondAttribute="leading" priority="999" constant="50" id="Ing-DJ-2fR"/>
+                                    <constraint firstAttribute="trailing" secondItem="Fap-Pj-JOu" secondAttribute="trailing" priority="999" constant="40" id="H2D-7g-sZt"/>
+                                    <constraint firstItem="Fap-Pj-JOu" firstAttribute="leading" secondItem="thj-73-wrM" secondAttribute="leading" priority="999" constant="40" id="Ing-DJ-2fR"/>
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.71425676233363888" blue="0.36723572714635677" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.035294117647058823" green="0.19607843137254902" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="thj-73-wrM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="NkN-aY-V6x"/>
                             <constraint firstAttribute="trailingMargin" secondItem="thj-73-wrM" secondAttribute="trailing" id="Svb-N1-OVD"/>
