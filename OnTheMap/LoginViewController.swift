@@ -8,6 +8,7 @@
 
 import UIKit
 import FacebookLogin
+import FacebookCore
 
 class LoginViewController: UIViewController {
 
@@ -39,7 +40,18 @@ class LoginViewController: UIViewController {
             case .cancelled:
                 print("User cancelled login.")
             case .success: //(let grantedPermissions, let declinedPermissions, let accessToken):
+                print("Logged in! ", FacebookCore.AccessToken.current!)
+            }
+        }
+    }
+    
+    @IBAction func loginButton(_ sender: Any) {
+        
+        UdacityClient.shared.login(username: "username", password: "password") { data, error in
+            if error == nil {
                 print("Logged in!")
+            } else {
+                print("Could not log in!")
             }
         }
     }
@@ -49,10 +61,10 @@ class LoginViewController: UIViewController {
     func configureBackground() {
         view.backgroundColor = Color.defaultColor
         backgroundGradient = CAGradientLayer()
-        let colorTopBottom = Color.defaultColor.cgColor
-        let colorMiddle = Color.lightColor.cgColor
+        let edgeColor = Color.defaultColor.cgColor
+        let middleColor = Color.lightColor.cgColor
         
-        backgroundGradient!.colors = [colorTopBottom, colorMiddle, colorMiddle, colorTopBottom]
+        backgroundGradient!.colors = [edgeColor, middleColor, middleColor, edgeColor]
         backgroundGradient!.locations = [0.0, 0.3, 0.7, 1.0]
         backgroundGradient!.frame = view.bounds
         view.layer.insertSublayer(backgroundGradient!, at: 0)
