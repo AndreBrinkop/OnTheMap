@@ -57,6 +57,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        if let activeTextField = activeTextField {
+            activeTextField.resignFirstResponder()
+            self.activeTextField = nil
+        }
+        
         UdacityClient.shared.login(username: email, password: password) { data, error in
             guard error == nil else {
                 let nsError = error as? NSError
@@ -117,7 +122,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         else
         {
-            textField.resignFirstResponder()
+            activeTextField?.resignFirstResponder()
+            activeTextField = nil
             loginUsingEmailAndPassword()
         }
         return false
