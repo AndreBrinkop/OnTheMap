@@ -58,12 +58,18 @@
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="5hK-In-eVl"/>
+                                                </connections>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aOX-I6-Chh">
+                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aOX-I6-Chh">
                                                 <rect key="frame" x="0.0" y="35" width="263" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="cMw-4H-UDc"/>
+                                                </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aj2-35-bus" customClass="CustomButton" customModule="OnTheMap" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="70" width="263" height="32"/>
@@ -71,7 +77,7 @@
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                 <state key="normal" title="Login"/>
                                                 <connections>
-                                                    <action selector="loginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fyc-zD-8Zx"/>
+                                                    <action selector="loginUsingUsernameAndPassword" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kdr-yG-AKi"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q9n-43-kj1">
@@ -81,7 +87,7 @@
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="signUpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lB8-5c-Jtd"/>
+                                                    <action selector="signUpForNewAccount" destination="BYZ-38-t0r" eventType="touchUpInside" id="34p-yn-eYg"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2cH-7R-IEZ">
@@ -91,7 +97,7 @@
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="facebookLoginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JwA-lB-RZU"/>
+                                                    <action selector="loginUsingFacebook" destination="BYZ-38-t0r" eventType="touchUpInside" id="7io-KK-7bE"/>
                                                 </connections>
                                             </button>
                                         </subviews>
