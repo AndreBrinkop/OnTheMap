@@ -58,11 +58,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         UdacityClient.shared.login(username: email, password: password) { data, error in
-            if error == nil {
-                print("Logged in!")
-            } else {
+            guard error == nil else {
+                let nsError = error as? NSError
+                if nsError != nil && nsError!.domain == "httpResponseCode" {
+                    self.displayCouldNotLoginMessage(message: "invalid Email or Password.")
+                } else {
+                    self.displayCouldNotLoginMessage(message: "\(error!.localizedDescription)")
+                }
                 print("Could not log in!")
+                return
             }
+            print("Logged in!")
+
         }
     }
     
@@ -89,7 +96,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func displayCouldNotLoginMessage(message: String) {
         let alertController = UIAlertController(title: "Could not log in!", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     

@@ -43,18 +43,14 @@ class HTTPClient {
             do {
                 request.httpBody = try JSONSerialization.data(withJSONObject: jsonBody)
             } catch {
-                completionHandler(nil, createError(domain: "httpRequest", error: "Can not parse JSON body"))
+                completionHandler(nil, createError(domain: "parseJSON", error: "Can not parse JSON body"))
                 return
             }
         }
         
         let task = session.dataTask(with: request) { (data, response, error) in
-            func sendError(error: String) {
-                completionHandler(nil, createError(domain: "postRequest", error: error))
-            }
-            
             if let responseError = checkForError(data: data, response: response, error: error) {
-                sendError(error: responseError)
+                completionHandler(nil, responseError)
                 return
             }
             
@@ -80,21 +76,21 @@ class HTTPClient {
     
     // MARK: Check for Errors
     
-    static private func checkForError(data: Data?, response: URLResponse?, error: Error?) -> String? {
+    static private func checkForError(data: Data?, response: URLResponse?, error: Error?) -> Error? {
         
         /* GUARD: Was there an error? */
         guard (error == nil) else {
-            return "There was an error with your request: \(error)"
+            return error
         }
         
         /* GUARD: Did we get a successful 2XX response? */
         guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-            return "Your request returned a status code other than 2xx!"
+            return createError(domain: "httpResponseCode", error: "Your request returned a status code other than 2xx!")
         }
         
         /* GUARD: Was there any data returned? */
         guard data != nil else {
-            return "No data was returned by the request!"
+            return createError(domain: "httpResponseData", error: "No data was returned by the request!")
         }
         
         return nil
