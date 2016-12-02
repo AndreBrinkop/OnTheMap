@@ -10,6 +10,8 @@ import Foundation
 
 extension UdacityClient {
     
+    static let signUpUrl = URL(string: "https://www.udacity.com/account/auth#!/signup")!
+    
     // Mark: Constants
     struct RequestConstants {
         

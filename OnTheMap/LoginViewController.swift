@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 import FacebookLogin
 import FacebookCore
 
@@ -70,6 +71,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func signUpForNewAccount() {
+        let safariViewController = SFSafariViewController(url: UdacityClient.signUpUrl)
+        self.present(safariViewController, animated: true, completion: nil)
+
     }
     
     // MARK: UITextFieldDelegate
