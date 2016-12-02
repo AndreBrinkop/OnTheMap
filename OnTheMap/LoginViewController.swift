@@ -43,7 +43,28 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         unsubscribeFromKeyboardNotifications()
     }
     
-    // MARK: Facebook Login
+    // MARK: Login and Sign Up
+    
+    @IBAction func loginUsingEmailAndPassword() {
+        
+        guard let email = emailTextField.text, email != "" else {
+            displayCouldNotLoginMessage(message: "Please enter your email address!")
+            return
+        }
+        
+        guard let password = passwordTextField.text, password != "" else {
+            displayCouldNotLoginMessage(message: "Please enter your password!")
+            return
+        }
+        
+        UdacityClient.shared.login(username: email, password: password) { data, error in
+            if error == nil {
+                print("Logged in!")
+            } else {
+                print("Could not log in!")
+            }
+        }
+    }
     
     @IBAction func loginUsingFacebook() {
         let loginManager = LoginManager()
@@ -59,26 +80,28 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func loginUsingUsernameAndPassword() {
-        
-        UdacityClient.shared.login(username: "username", password: "password") { data, error in
-            if error == nil {
-                print("Logged in!")
-            } else {
-                print("Could not log in!")
-            }
-        }
-    }
-    
     @IBAction func signUpForNewAccount() {
         let safariViewController = SFSafariViewController(url: UdacityClient.signUpUrl)
         self.present(safariViewController, animated: true, completion: nil)
-
+    }
+    
+    // MARK: Alert
+    
+    func displayCouldNotLoginMessage(message: String) {
+        let alertController = UIAlertController(title: "Could not log in!", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     // MARK: UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        guard let text = textField.text, text != "" else {
+            textField.resignFirstResponder()
+            return false
+        }
+        
         let nextTag = textField.tag + 1;
         let nextResponder = textField.superview?.viewWithTag(nextTag) as UIResponder!
         
@@ -88,7 +111,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         else
         {
             textField.resignFirstResponder()
-            loginUsingUsernameAndPassword()
+            loginUsingEmailAndPassword()
         }
         return false
 

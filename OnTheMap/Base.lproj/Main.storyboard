@@ -77,7 +77,7 @@
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                 <state key="normal" title="Login"/>
                                                 <connections>
-                                                    <action selector="loginUsingUsernameAndPassword" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kdr-yG-AKi"/>
+                                                    <action selector="loginUsingEmailAndPassword" destination="BYZ-38-t0r" eventType="touchUpInside" id="1DG-Zx-5NT"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q9n-43-kj1">
