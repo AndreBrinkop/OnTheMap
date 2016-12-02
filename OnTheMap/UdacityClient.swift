@@ -12,8 +12,9 @@ class UdacityClient {
     
     // MARK: API Methods
     
-    func loginUsingEmailAndPassword(email: String, password: String, completionHandler: @escaping ((_ parsedData: [String : AnyObject]?, _ error: Error?) -> Void)) {
+    func loginUsingEmailAndPassword(email: String, password: String, completionHandler: @escaping ((_ userId: String?, _ error: Error?) -> Void)) {
         
+        let loginMethodErrorMessage = "Invalid Email or Password."
         let httpBody = [
             "udacity" : [
                 "username" : email,
@@ -21,21 +22,22 @@ class UdacityClient {
             ]
         ]
         
-        login(httpBody: httpBody as [String : AnyObject]?, completionHandler: completionHandler)
+        login(loginMethodErrorMessage: loginMethodErrorMessage, httpBody: httpBody as [String : AnyObject]?, completionHandler: completionHandler)
     }
     
-    func loginUsingFacebook(accessToken: String, completionHandler: @escaping (_ parsedData: [String : AnyObject]?, _ error: Error?) -> Void) {
+    func loginUsingFacebook(accessToken: String, completionHandler: @escaping (_ userId: String?, _ error: Error?) -> Void) {
         
+        let loginMethodErrorMessage = "Could not log in using Facebook. Ensure your Facebook account is connected with your Udacity account."
         let httpBody = [
             "facebook_mobile" : [
                 "access_token" : accessToken
             ]
         ]
         
-        login(httpBody: httpBody as [String : AnyObject]?, completionHandler: completionHandler)
+        login(loginMethodErrorMessage: loginMethodErrorMessage, httpBody: httpBody as [String : AnyObject]?, completionHandler: completionHandler)
     }
     
-    private func login(httpBody: [String : AnyObject]?, completionHandler: @escaping (_ parsedData: [String : AnyObject]?, _ error: Error?) -> Void) {
+    private func login(loginMethodErrorMessage: String, httpBody: [String : AnyObject]?, completionHandler: @escaping (_ userId: String?, _ error: Error?) -> Void) {
         
         let url = buildUrl(withPathExtension: Methods.login)
         
@@ -44,15 +46,38 @@ class UdacityClient {
             let data = self.formatData(data: data)
             let parsedResult = HTTPClient.parseData(data: data)
             
-            guard let parsedData = parsedResult.parsedData, parsedResult.error == nil else {
+            guard parsedResult.error == nil, let parsedData = parsedResult.parsedData else {
+                let nsError = error as? NSError
+
+                if nsError != nil && nsError!.domain == "httpResponseCode" {
+                    completionHandler(nil, HTTPClient.createError(domain: "login", error: loginMethodErrorMessage))
+                } else {
+                    completionHandler(nil, HTTPClient.createError(domain: "login", error: "\(error!.localizedDescription)"))
+                }
                 completionHandler(nil, error)
                 return
             }
             
-            DispatchQueue.main.async {
-                completionHandler(parsedData, error)
-            }
+            self.parseUserId(loginMethodErrorMessage: loginMethodErrorMessage, parsedData: parsedData, error: error, completionHandler: completionHandler)
+            
         })
+    }
+    
+    private func parseUserId(loginMethodErrorMessage: String, parsedData : [String : AnyObject]?, error: Error?, completionHandler: @escaping (_ userId: String?, _ error: Error?) -> Void) {
+        
+        guard error == nil, let parsedData = parsedData else {
+            completionHandler(nil, error)
+            return
+        }
+        
+        guard let account = parsedData["account"], let userId = account["key"] as? String else {
+            completionHandler(nil, HTTPClient.createError(domain: "parseUserId", error: "Internal API Error."))
+            return
+        }
+        
+        DispatchQueue.main.async {
+            completionHandler(userId, nil)
+        }
     }
     
     // MARK: Build API Request URL

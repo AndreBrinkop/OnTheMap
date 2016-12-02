@@ -62,9 +62,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.activeTextField = nil
         }
         
-        UdacityClient.shared.loginUsingEmailAndPassword(email: email, password: password) { parsedData, error in
-            let credentialErrorMessage = "Invalid Email or Password."
-            self.handleLoginResponse(credentialErrorMessage: credentialErrorMessage, loginMethod: "Udacity", parsedData: parsedData, error: error)
+        UdacityClient.shared.loginUsingEmailAndPassword(email: email, password: password) { userId, error in
+            self.handleLoginResponse(loginMethod: "Udacity", userId: userId, error: error)
         }
     }
     
@@ -79,16 +78,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             case .success (_, _, let accessToken):
                 print("Connected to Facebook. Token: \(accessToken.authenticationToken)")
                 
-                UdacityClient.shared.loginUsingFacebook(accessToken: accessToken.authenticationToken) { parsedData, error in
-                    let credentialErrorMessage = "Could not log in using Facebook. Ensure your Facebook account is connected with your Udacity account."
-                    self.handleLoginResponse(credentialErrorMessage: credentialErrorMessage, loginMethod: "Facebook", parsedData: parsedData, error: error)
+                UdacityClient.shared.loginUsingFacebook(accessToken: accessToken.authenticationToken) { userId, error in
+                    self.handleLoginResponse(loginMethod: "Facebook", userId: userId, error: error)
                 }
-                
             }
         }
     }
     
-    func handleLoginResponse(credentialErrorMessage: String, loginMethod: String, parsedData: [String : AnyObject]?, error: Error?) {
+    // MARK: Login Workflow
+    
+    func handleLoginResponse(loginMethod: String, userId: String?, error: Error?) {
+        guard error == nil, let userId = userId else {
+            self.displayCouldNotLoginMessage(message: "\(error!.localizedDescription)")
+            print("Could not log in!")
+            return
+        }
+        
+        print("Logged in using \(loginMethod)! User ID: \(userId)")
+        
+    }
+    
+    func handleLoginResponse2(credentialErrorMessage: String, loginMethod: String, parsedData: [String : AnyObject]?, error: Error?) {
         guard error == nil, let parsedData = parsedData else {
             let nsError = error as? NSError
             if nsError != nil && nsError!.domain == "httpResponseCode" {

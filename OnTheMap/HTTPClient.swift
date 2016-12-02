@@ -96,7 +96,7 @@ class HTTPClient {
         return nil
     }
     
-    static private func createError(domain: String, error: String) -> NSError {
+    static func createError(domain: String, error: String) -> NSError {
         let userInfo = [NSLocalizedDescriptionKey: error]
         return NSError(domain: domain, code: 1, userInfo: userInfo)
     }
