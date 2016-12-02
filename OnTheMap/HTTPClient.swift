@@ -18,16 +18,16 @@ class HTTPClient {
     // MARK: Convenience Methods
     
     static func getRequest(url: URL, headerFields: [String : String]?, completionHandler: @escaping (_ result: Data?, _ error: Error?) -> Void) {
-        httpRequest(url: url, httpMethod: "GET", headerFields: headerFields, jsonBody: nil, completionHandler: completionHandler)
+        httpRequest(url: url, httpMethod: "GET", headerFields: headerFields, httpBody: nil, completionHandler: completionHandler)
     }
     
-    static func postRequest(url: URL, headerFields: [String : String]?, jsonBody: [String : AnyObject], completionHandler: @escaping (_ result: Data?, _ error: Error?) -> Void) {
-        httpRequest(url: url, httpMethod: "POST", headerFields: headerFields, jsonBody: jsonBody, completionHandler: completionHandler)
+    static func postRequest(url: URL, headerFields: [String : String]?, httpBody: [String : AnyObject]?, completionHandler: @escaping (_ result: Data?, _ error: Error?) -> Void) {
+        httpRequest(url: url, httpMethod: "POST", headerFields: headerFields, httpBody: httpBody, completionHandler: completionHandler)
     }
     
     // MARK: Request Method
     
-    static func httpRequest(url: URL, httpMethod: String, headerFields: [String : String]?,  jsonBody: [String : AnyObject]?, completionHandler: @escaping (_ result: Data?, _ error: Error?) -> Void) {
+    static func httpRequest(url: URL, httpMethod: String, headerFields: [String : String]?,  httpBody: [String : AnyObject]?, completionHandler: @escaping (_ result: Data?, _ error: Error?) -> Void) {
         var request = URLRequest(url: url)
         
         request.httpMethod = httpMethod
@@ -39,9 +39,9 @@ class HTTPClient {
             }
         }
 
-        if let jsonBody = jsonBody {
+        if let httpBody = httpBody {
             do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: jsonBody)
+                request.httpBody = try JSONSerialization.data(withJSONObject: httpBody)
             } catch {
                 completionHandler(nil, createError(domain: "parseJSON", error: "Can not parse JSON body"))
                 return

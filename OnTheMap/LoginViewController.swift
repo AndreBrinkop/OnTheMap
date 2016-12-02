@@ -62,19 +62,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.activeTextField = nil
         }
         
-        UdacityClient.shared.login(username: email, password: password) { data, error in
-            guard error == nil else {
-                let nsError = error as? NSError
-                if nsError != nil && nsError!.domain == "httpResponseCode" {
-                    self.displayCouldNotLoginMessage(message: "invalid Email or Password.")
-                } else {
-                    self.displayCouldNotLoginMessage(message: "\(error!.localizedDescription)")
-                }
-                print("Could not log in!")
-                return
-            }
-            print("Logged in!")
-
+        UdacityClient.shared.loginUsingEmailAndPassword(email: email, password: password) { parsedData, error in
+            let credentialErrorMessage = "Invalid Email or Password."
+            self.handleLoginResponse(credentialErrorMessage: credentialErrorMessage, loginMethod: "Udacity", parsedData: parsedData, error: error)
         }
     }
     
@@ -85,18 +75,45 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             case .failed(let error):
                 print(error)
             case .cancelled:
-                print("User cancelled login.")
-            case .success: //(let grantedPermissions, let declinedPermissions, let accessToken):
-                print("Logged in! ", FacebookCore.AccessToken.current!)
+                print("User cancelled facebook login.")
+            case .success (_, _, let accessToken):
+                print("Connected to Facebook. Token: \(accessToken.authenticationToken)")
+                
+                UdacityClient.shared.loginUsingFacebook(accessToken: accessToken.authenticationToken) { parsedData, error in
+                    let credentialErrorMessage = "Could not log in using Facebook. Ensure your Facebook account is connected with your Udacity account."
+                    self.handleLoginResponse(credentialErrorMessage: credentialErrorMessage, loginMethod: "Facebook", parsedData: parsedData, error: error)
+                }
+                
             }
         }
     }
     
+    func handleLoginResponse(credentialErrorMessage: String, loginMethod: String, parsedData: [String : AnyObject]?, error: Error?) {
+        guard error == nil, let parsedData = parsedData else {
+            let nsError = error as? NSError
+            if nsError != nil && nsError!.domain == "httpResponseCode" {
+                self.displayCouldNotLoginMessage(message: credentialErrorMessage)
+            } else {
+                self.displayCouldNotLoginMessage(message: "\(error!.localizedDescription)")
+            }
+            print("Could not log in!")
+            return
+        }
+        
+        guard let account = parsedData["account"], let userId = account["key"] as? String else {
+            self.displayCouldNotLoginMessage(message: "Internal API Error.")
+            return
+        }
+        
+        print("Logged in using \(loginMethod)! User ID: \(userId)")
+
+    }
+
     @IBAction func signUpForNewAccount() {
         let safariViewController = SFSafariViewController(url: UdacityClient.signUpUrl)
         self.present(safariViewController, animated: true, completion: nil)
     }
-    
+
     // MARK: Alert
     
     func displayCouldNotLoginMessage(message: String) {

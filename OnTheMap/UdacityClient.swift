@@ -12,18 +12,34 @@ class UdacityClient {
     
     // MARK: API Methods
     
-    func login(username: String, password: String, completionHandler: @escaping ((_ parsedData: [String : AnyObject]?, _ error: Error?) -> Void)) {
+    func loginUsingEmailAndPassword(email: String, password: String, completionHandler: @escaping ((_ parsedData: [String : AnyObject]?, _ error: Error?) -> Void)) {
         
-        let url = buildUrl(withPathExtension: Methods.login)
-        
-        let jsonBody = [
+        let httpBody = [
             "udacity" : [
-                "username" : username,
+                "username" : email,
                 "password" : password
             ]
         ]
         
-        HTTPClient.postRequest(url: url, headerFields: RequestConstants.headerFields, jsonBody: jsonBody as [String : AnyObject], completionHandler: {data, error in
+        login(httpBody: httpBody as [String : AnyObject]?, completionHandler: completionHandler)
+    }
+    
+    func loginUsingFacebook(accessToken: String, completionHandler: @escaping (_ parsedData: [String : AnyObject]?, _ error: Error?) -> Void) {
+        
+        let httpBody = [
+            "facebook_mobile" : [
+                "access_token" : accessToken
+            ]
+        ]
+        
+        login(httpBody: httpBody as [String : AnyObject]?, completionHandler: completionHandler)
+    }
+    
+    private func login(httpBody: [String : AnyObject]?, completionHandler: @escaping (_ parsedData: [String : AnyObject]?, _ error: Error?) -> Void) {
+        
+        let url = buildUrl(withPathExtension: Methods.login)
+        
+        HTTPClient.postRequest(url: url, headerFields: RequestConstants.headerFields, httpBody: httpBody, completionHandler: {data, error in
             
             let data = self.formatData(data: data)
             let parsedResult = HTTPClient.parseData(data: data)
