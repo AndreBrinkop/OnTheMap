@@ -80,6 +80,9 @@
                                                 <state key="normal" title="Don't have an account? Sign Up">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="signUpButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lB8-5c-Jtd"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2cH-7R-IEZ">
                                                 <rect key="frame" x="0.0" y="144" width="263" height="32"/>
@@ -88,7 +91,7 @@
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="loginUsingFacebook:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AJo-9m-OwT"/>
+                                                    <action selector="facebookLoginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JwA-lB-RZU"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -110,6 +113,10 @@
                             <constraint firstItem="thj-73-wrM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="wkA-RC-Rwa"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="Kgb-bN-wJe" id="R8g-q9-7nO"/>
+                        <outlet property="passwordTextField" destination="aOX-I6-Chh" id="M6c-mH-LDI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

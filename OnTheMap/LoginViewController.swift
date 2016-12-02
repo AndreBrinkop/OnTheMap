@@ -14,6 +14,8 @@ class LoginViewController: UIViewController {
 
     // MARK: Properties
     
+    @IBOutlet var emailTextField: UITextField!
+    @IBOutlet var passwordTextField: UITextField!
     var backgroundGradient: CAGradientLayer?
 
     // MARK: Initialization
@@ -31,7 +33,7 @@ class LoginViewController: UIViewController {
     
     // MARK: Facebook Login
     
-    @IBAction func loginUsingFacebook(_ sender: Any) {
+    @IBAction func facebookLoginButton(_ sender: Any) {
         let loginManager = LoginManager()
         loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
             switch loginResult {
@@ -54,6 +56,9 @@ class LoginViewController: UIViewController {
                 print("Could not log in!")
             }
         }
+    }
+    
+    @IBAction func signUpButton(_ sender: Any) {
     }
     
     // MARK: Gradient Background
