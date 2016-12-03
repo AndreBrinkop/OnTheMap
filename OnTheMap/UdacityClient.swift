@@ -19,9 +19,9 @@ class UdacityClient {
         
         let loginMethodErrorMessage = "Invalid Email or Password."
         let httpBody = [
-            "udacity" : [
-                "username" : email,
-                "password" : password
+            JSONBodyKeys.udacity : [
+                JSONBodyKeys.username : email,
+                JSONBodyKeys.password : password
             ]
         ]
         
@@ -32,8 +32,8 @@ class UdacityClient {
         
         let loginMethodErrorMessage = "Could not log in using Facebook. Ensure your Facebook account is connected with your Udacity account."
         let httpBody = [
-            "facebook_mobile" : [
-                "access_token" : accessToken
+            JSONBodyKeys.facebook : [
+                JSONBodyKeys.facebookToken : accessToken
             ]
         ]
         
@@ -78,9 +78,9 @@ class UdacityClient {
                 let nsError = error as? NSError
                 
                 if nsError != nil && nsError!.domain == "httpResponseCode" {
-                    completionHandler(nil, HTTPClient.createError(domain: "login", error: loginMethodErrorMessage))
+                    completionHandler(nil, HTTPClient.createError(domain: "getUserId", error: loginMethodErrorMessage))
                 } else {
-                    completionHandler(nil, HTTPClient.createError(domain: "login", error: "\(error!.localizedDescription)"))
+                    completionHandler(nil, HTTPClient.createError(domain: "getUserId", error: "\(error!.localizedDescription)"))
                 }
                 completionHandler(nil, error)
                 return
@@ -98,14 +98,14 @@ class UdacityClient {
     }
     
     private func parseUserId(parsedData : [String : AnyObject]) -> String? {
-        guard let account = parsedData["account"], let userId = account["key"] as? String else {
+        guard let account = parsedData[JSONResponseKeys.account], let userId = account[JSONResponseKeys.userId] as? String else {
             return nil
         }
         return userId
     }
     
     private func getUserData(userId: String, completionHandler: @escaping ((_ userName: (String, String)?, _ error: Error?) -> Void)) {
-        let method = HTTPClient.substituteKeyInMethod(Methods.userData, key: "user_id", value: userId)
+        let method = HTTPClient.substituteKeyInMethod(Methods.userData, key: URLKeys.userId, value: userId)
         let url = buildUrl(withPathExtension: method)
         
         HTTPClient.getRequest(url: url, headerFields: RequestConstants.headerFields, completionHandler: {data, error in
@@ -124,7 +124,7 @@ class UdacityClient {
     }
     
     private func parseUserData(parsedData : [String : AnyObject]) -> (String, String)? {
-        guard let user = parsedData["user"], let firstName = user["first_name"] as? String, let lastName = user["last_name"] as? String else {
+        guard let user = parsedData[JSONResponseKeys.user], let firstName = user[JSONResponseKeys.firstname] as? String, let lastName = user[JSONResponseKeys.lastname] as? String else {
             return nil
         }
         return (firstName, lastName)
