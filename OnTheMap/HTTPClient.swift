@@ -96,9 +96,20 @@ class HTTPClient {
         return nil
     }
     
+    // MARK: Helper Methods
+    
     static func createError(domain: String, error: String) -> NSError {
         let userInfo = [NSLocalizedDescriptionKey: error]
         return NSError(domain: domain, code: 1, userInfo: userInfo)
+    }
+    
+    // Substitute the Key for the Value within the Method Name
+    static func substituteKeyInMethod(_ method: String, key: String, value: String) -> String? {
+        if method.range(of: "<\(key)>") != nil {
+            return method.replacingOccurrences(of: "<\(key)>", with: value)
+        } else {
+            return nil
+        }
     }
     
 }

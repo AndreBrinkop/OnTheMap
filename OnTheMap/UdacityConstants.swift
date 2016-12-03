@@ -30,6 +30,14 @@ extension UdacityClient {
     // MARK: Methods
     struct Methods {
         static let login = "/session"
+        static let userData = "/users/<user_id>"
+    }
+    
+    // MARK: Userdata
+    struct User {
+        var userId : String
+        var firstName : String
+        var lastName : String
     }
     
 }

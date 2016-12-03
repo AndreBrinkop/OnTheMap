@@ -10,9 +10,12 @@ import Foundation
 
 class UdacityClient {
     
+    // MARK: Properties
+    var userData: User?
+    
     // MARK: API Methods
     
-    func loginUsingEmailAndPassword(email: String, password: String, completionHandler: @escaping ((_ userId: String?, _ error: Error?) -> Void)) {
+    func loginUsingEmailAndPassword(email: String, password: String, completionHandler: @escaping ((_ success: Bool, _ error: Error?) -> Void)) {
         
         let loginMethodErrorMessage = "Invalid Email or Password."
         let httpBody = [
@@ -25,7 +28,7 @@ class UdacityClient {
         login(loginMethodErrorMessage: loginMethodErrorMessage, httpBody: httpBody as [String : AnyObject]?, completionHandler: completionHandler)
     }
     
-    func loginUsingFacebook(accessToken: String, completionHandler: @escaping (_ userId: String?, _ error: Error?) -> Void) {
+    func loginUsingFacebook(accessToken: String, completionHandler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         
         let loginMethodErrorMessage = "Could not log in using Facebook. Ensure your Facebook account is connected with your Udacity account."
         let httpBody = [
@@ -37,7 +40,32 @@ class UdacityClient {
         login(loginMethodErrorMessage: loginMethodErrorMessage, httpBody: httpBody as [String : AnyObject]?, completionHandler: completionHandler)
     }
     
-    private func login(loginMethodErrorMessage: String, httpBody: [String : AnyObject]?, completionHandler: @escaping (_ userId: String?, _ error: Error?) -> Void) {
+    // MARK: Login Helper Methods
+    
+    private func login(loginMethodErrorMessage: String, httpBody: [String : AnyObject]?, completionHandler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
+        
+        getUserId(loginMethodErrorMessage: loginMethodErrorMessage, httpBody: httpBody) { userId, error in
+            
+            guard let userId = userId, error == nil else {
+                completionHandler(false, error)
+                return
+            }
+            
+            self.getUserData(userId: userId) { userName, error in
+                
+                guard let userName = userName, error == nil else {
+                    completionHandler(false, error)
+                    return
+                }
+                
+                self.userData = User(userId: userId, firstName: userName.0, lastName: userName.1)
+                completionHandler(true, nil)
+            }
+            
+        }
+    }
+    
+    private func getUserId(loginMethodErrorMessage: String, httpBody: [String : AnyObject]?, completionHandler: @escaping (_ userId: String?, _ error: Error?) -> Void) {
         
         let url = buildUrl(withPathExtension: Methods.login)
         
@@ -48,7 +76,7 @@ class UdacityClient {
             
             guard parsedResult.error == nil, let parsedData = parsedResult.parsedData else {
                 let nsError = error as? NSError
-
+                
                 if nsError != nil && nsError!.domain == "httpResponseCode" {
                     completionHandler(nil, HTTPClient.createError(domain: "login", error: loginMethodErrorMessage))
                 } else {
@@ -58,26 +86,48 @@ class UdacityClient {
                 return
             }
             
-            self.parseUserId(loginMethodErrorMessage: loginMethodErrorMessage, parsedData: parsedData, error: error, completionHandler: completionHandler)
+            // parse user id
+            guard let userId = self.parseUserId(parsedData: parsedData) else {
+                completionHandler(nil, HTTPClient.createError(domain: "parseUserId", error: "Internal API Error."))
+                return
+            }
+            
+            completionHandler(userId, nil)
             
         })
     }
     
-    private func parseUserId(loginMethodErrorMessage: String, parsedData : [String : AnyObject]?, error: Error?, completionHandler: @escaping (_ userId: String?, _ error: Error?) -> Void) {
-        
-        guard error == nil, let parsedData = parsedData else {
-            completionHandler(nil, error)
-            return
-        }
-        
+    private func parseUserId(parsedData : [String : AnyObject]) -> String? {
         guard let account = parsedData["account"], let userId = account["key"] as? String else {
-            completionHandler(nil, HTTPClient.createError(domain: "parseUserId", error: "Internal API Error."))
-            return
+            return nil
         }
+        return userId
+    }
+    
+    private func getUserData(userId: String, completionHandler: @escaping ((_ userName: (String, String)?, _ error: Error?) -> Void)) {
+        let method = HTTPClient.substituteKeyInMethod(Methods.userData, key: "user_id", value: userId)
+        let url = buildUrl(withPathExtension: method)
         
-        DispatchQueue.main.async {
-            completionHandler(userId, nil)
+        HTTPClient.getRequest(url: url, headerFields: RequestConstants.headerFields, completionHandler: {data, error in
+            
+            let data = self.formatData(data: data)
+            let parsedResult = HTTPClient.parseData(data: data)
+            
+            guard let parsedData = parsedResult.parsedData, parsedResult.error == nil else {
+                completionHandler(nil, error)
+                return
+            }
+            
+            let userName = self.parseUserData(parsedData: parsedData)
+            completionHandler(userName, nil)
+        })
+    }
+    
+    private func parseUserData(parsedData : [String : AnyObject]) -> (String, String)? {
+        guard let user = parsedData["user"], let firstName = user["first_name"] as? String, let lastName = user["last_name"] as? String else {
+            return nil
         }
+        return (firstName, lastName)
     }
     
     // MARK: Build API Request URL
@@ -99,8 +149,9 @@ class UdacityClient {
         return urlComponents.url!
     }
     
-    // MARK: Prepare Response Data for Parser
+    // MARK: Helper Methods
     
+    // Prepare Response Data for Parser
     private func formatData(data: Data?) -> Data? {
         
         guard data != nil else {
