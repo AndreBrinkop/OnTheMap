@@ -6,6 +6,7 @@
 //  Copyright © 2016 André Brinkop. All rights reserved.
 //
 
+import UIKit
 import Foundation
 
 class HTTPClient {
@@ -52,6 +53,9 @@ class HTTPClient {
         }
         
         let task = session.dataTask(with: request) { (data, response, error) in
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            
             if let responseError = checkForError(data: data, response: response, error: error) {
                 completionHandler(nil, responseError)
                 return
@@ -60,6 +64,7 @@ class HTTPClient {
             completionHandler(data, nil)
         }
         task.resume()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     // MARK: Parse data
