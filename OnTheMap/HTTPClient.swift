@@ -24,6 +24,10 @@ class HTTPClient {
         httpRequest(url: url, httpMethod: "POST", headerFields: headerFields, httpBody: httpBody, completionHandler: completionHandler)
     }
     
+    static func deleteRequest(url: URL, headerFields: [String : String]?, completionHandler: @escaping (_ result: Data?, _ error: Error?) -> Void) {
+        httpRequest(url: url, httpMethod: "DELETE", headerFields: headerFields, httpBody: nil, completionHandler: completionHandler)
+    }
+    
     // MARK: Request Method
     
     static func httpRequest(url: URL, httpMethod: String, headerFields: [String : String]?,  httpBody: [String : AnyObject]?, completionHandler: @escaping (_ result: Data?, _ error: Error?) -> Void) {

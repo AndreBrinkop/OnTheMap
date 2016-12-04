@@ -29,7 +29,7 @@ extension UdacityClient {
     
     // MARK: Methods
     struct Methods {
-        static let login = "/session"
+        static let session = "/session"
         static let userData = "/users/<user_id>"
     }
     
@@ -53,6 +53,10 @@ extension UdacityClient {
         // MARK: Account
         static let account = "account"
         static let userId = "key"
+        
+        // MARK: Session
+        static let session = "session"
+        static let sessionId = "id"
         
         // MARK: User
         static let user = "user"

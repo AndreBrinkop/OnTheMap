@@ -11,8 +11,9 @@ import Foundation
 class UdacityClient {
     
     // MARK: Properties
-    var userData: User?
-    var facebookToken: String?
+    private(set) var userData: User?
+    private(set) var sessionId: String?
+    private(set) var facebookToken: String?
     
     // MARK: API Methods
     
@@ -43,11 +44,46 @@ class UdacityClient {
         login(loginMethodErrorMessage: loginMethodErrorMessage, httpBody: httpBody as [String : AnyObject]?, completionHandler: completionHandler)
     }
     
+    func logout(completionHandler: @escaping (_ error: Error?) -> ()) {
+        let url = buildUrl(withPathExtension: Methods.session)
+
+        var headerFields = [String : String]()
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            headerFields["X-XSRF-TOKEN"] = xsrfCookie.value
+        }
+        
+        HTTPClient.deleteRequest(url: url, headerFields: headerFields) { data, error in
+            let data = self.formatData(data: data)
+            let parsedResult = HTTPClient.parseData(data: data)
+            
+            guard parsedResult.error == nil, parsedResult.parsedData != nil else {
+                completionHandler(parsedResult.error)
+                return
+            }
+            
+            // logout successful
+            self.sessionId = nil
+            
+            guard self.facebookToken == nil else {
+                self.logoutFacebook(completionHandler: completionHandler)
+                return
+            }
+            
+            completionHandler(nil)
+        }
+    }
+    
     // MARK: Login Helper Methods
     
     private func login(loginMethodErrorMessage: String, httpBody: [String : AnyObject]?, completionHandler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         
-        getUserId(loginMethodErrorMessage: loginMethodErrorMessage, httpBody: httpBody) { userId, error in
+        getSessionAndUserId(loginMethodErrorMessage: loginMethodErrorMessage, httpBody: httpBody) { userId, error in
             
             func executeCompletionHandler(success: Bool, error: Error?) {
                 DispatchQueue.main.async {
@@ -74,9 +110,9 @@ class UdacityClient {
         }
     }
     
-    private func getUserId(loginMethodErrorMessage: String, httpBody: [String : AnyObject]?, completionHandler: @escaping (_ userId: String?, _ error: Error?) -> Void) {
+    private func getSessionAndUserId(loginMethodErrorMessage: String, httpBody: [String : AnyObject]?, completionHandler: @escaping (_ userId: String?, _ error: Error?) -> Void) {
         
-        let url = buildUrl(withPathExtension: Methods.login)
+        let url = buildUrl(withPathExtension: Methods.session)
         
         HTTPClient.postRequest(url: url, headerFields: RequestConstants.headerFields, httpBody: httpBody, completionHandler: {data, error in
             
@@ -95,6 +131,13 @@ class UdacityClient {
                 return
             }
             
+            // parse session id
+            let successfullySetSessionId = self.parseAndSetSessionId(parsedData: parsedData)
+            guard successfullySetSessionId == true else {
+                completionHandler(nil, HTTPClient.createError(domain: "parseSessionId", error: "Internal API Error."))
+                return
+            }
+            
             // parse user id
             guard let userId = self.parseUserId(parsedData: parsedData) else {
                 completionHandler(nil, HTTPClient.createError(domain: "parseUserId", error: "Internal API Error."))
@@ -104,6 +147,14 @@ class UdacityClient {
             completionHandler(userId, nil)
             
         })
+    }
+    
+    private func parseAndSetSessionId(parsedData : [String : AnyObject]) -> Bool {
+        guard let session = parsedData[JSONResponseKeys.session], let sessionId = session[JSONResponseKeys.sessionId] as? String else {
+            return false
+        }
+        self.sessionId = sessionId
+        return true
     }
     
     private func parseUserId(parsedData : [String : AnyObject]) -> String? {
@@ -137,6 +188,12 @@ class UdacityClient {
             return nil
         }
         return (firstName, lastName)
+    }
+    
+    // MARK: Logout Helper Methods
+    
+    private func logoutFacebook(completionHandler: @escaping (_ error: Error?) -> ()) {
+        // TODO
     }
     
     // MARK: Build API Request URL
