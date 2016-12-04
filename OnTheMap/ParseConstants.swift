@@ -66,8 +66,8 @@ extension ParseClient {
     // MARK: Notifications
     struct Notifications {
         static let locationsUpdateStarted = "LocationsUpdateStarted"
-        static let locationsUpdated = "LocationsUpdateSuccessful"
-        static let locationsUpdateError = "LocationsUpdateError"
+        static let locationsUpdateCompleted = "LocationsUpdateCompleted"
+        static let locationsUpdateFailed = "LocationsUpdateFailed"
     }
 }
 

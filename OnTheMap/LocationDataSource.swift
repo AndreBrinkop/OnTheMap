@@ -27,13 +27,15 @@ class LocationDataSource: NSObject, UITableViewDataSource {
         self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateStarted)
         
         parseClient.getLastPostedLocations() { (studentLocations, error) in
-            guard let studentLocations = studentLocations, error == nil else {
-                self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateError)
-                return
+            DispatchQueue.main.async {
+                guard let studentLocations = studentLocations, error == nil else {
+                    self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateFailed)
+                    return
+                }
+                
+                self.studentLocations = studentLocations
+                self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateCompleted)
             }
-            
-            self.studentLocations = studentLocations
-            self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdated)
         }
     }
     

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ParseClient {
     
@@ -74,8 +75,12 @@ class ParseClient {
             if let parsedKey = result[JSONResponseKeys.key] as? String {
                 key = parsedKey
             }
-            if let parsedUrl = result[JSONResponseKeys.url] as? URL {
-                url = parsedUrl
+            if let parsedUrl = result[JSONResponseKeys.url] as? String {
+                // check if URL is valid
+                if let urlObject = URL(string: parsedUrl), UIApplication.shared.canOpenURL(urlObject)
+                {
+                    url = urlObject
+                }
             }
 
             studentLocations.append(StudentLocation(id: key, firstName: firstName, lastName: lastName, url: url, latitude: latitude, longitude: longitude))
