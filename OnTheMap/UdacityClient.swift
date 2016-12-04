@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FacebookLogin
 
 class UdacityClient {
     
@@ -70,9 +71,9 @@ class UdacityClient {
             // logout successful
             self.sessionId = nil
             
-            guard self.facebookToken == nil else {
-                self.logoutFacebook(completionHandler: completionHandler)
-                return
+            // facebook logout
+            if self.facebookToken != nil  {
+                self.logoutFacebook()
             }
             
             completionHandler(nil)
@@ -192,8 +193,10 @@ class UdacityClient {
     
     // MARK: Logout Helper Methods
     
-    private func logoutFacebook(completionHandler: @escaping (_ error: Error?) -> ()) {
-        // TODO
+    private func logoutFacebook() {
+        let loginManager = LoginManager()
+        loginManager.logOut()
+        facebookToken = nil
     }
     
     // MARK: Build API Request URL
