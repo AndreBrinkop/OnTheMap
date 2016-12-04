@@ -13,21 +13,28 @@ class LocationTableViewController: UIViewController, UITableViewDelegate {
     
     // MARK: Properties
     
-    private let dataSource = LocationDataSource.shared
+    private let locationDataSource = LocationDataSource.shared
+    private let refreshControl = UIRefreshControl()
+
     @IBOutlet var tableView: UITableView!
 
-    
     // MARK: Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = dataSource
+        tableView.dataSource = locationDataSource
 
+        refreshControl.addTarget(self, action: #selector(self.handleRefresh), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refreshControl)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         subscribeDataSourceNotifications()
+        
+        if locationDataSource.isRefreshing {
+            showLoadingSpinner()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -38,7 +45,7 @@ class LocationTableViewController: UIViewController, UITableViewDelegate {
     // MARK: Table View Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let studentLocation = dataSource.studentLocations[indexPath.row]
+        let studentLocation = locationDataSource.studentLocations[indexPath.row]
         
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -71,16 +78,23 @@ class LocationTableViewController: UIViewController, UITableViewDelegate {
     
     func didUpdateDataSource(success: Bool) {
         tableView.reloadData()
+        hideLoadingSpinner()
     }
     
     // MARK: Loading Spinner
     
+    func handleRefresh() {
+        locationDataSource.updateData()
+    }
+    
     func showLoadingSpinner() {
-        // TODO
+        // Move table view to make space for the refresh control (is needed if called from code)
+        tableView.setContentOffset(CGPoint(x: 0,y: tableView.contentOffset.y - refreshControl.frame.height), animated: true)
+        refreshControl.beginRefreshing()
     }
     
     func hideLoadingSpinner() {
-        // TODO
+        refreshControl.endRefreshing()
     }
     
     // MARK: Show Error Message

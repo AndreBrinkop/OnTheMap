@@ -13,6 +13,7 @@ class LocationDataSource: NSObject, UITableViewDataSource {
     
     private var parseClient = ParseClient.shared
     private(set) var studentLocations = [StudentLocation]()
+    private(set) var isRefreshing = false
     
     // MARK: Initialization
     
@@ -25,8 +26,10 @@ class LocationDataSource: NSObject, UITableViewDataSource {
     
     public func updateData() {
         self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateStarted)
+        isRefreshing = true
         
         parseClient.getLastPostedLocations() { (studentLocations, error) in
+            self.isRefreshing = false
             DispatchQueue.main.async {
                 guard let studentLocations = studentLocations, error == nil else {
                     self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateFailed)
