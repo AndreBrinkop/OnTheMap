@@ -12,10 +12,12 @@ class UdacityClient {
     
     // MARK: Properties
     var userData: User?
+    var facebookToken: String?
     
     // MARK: API Methods
     
     func loginUsingEmailAndPassword(email: String, password: String, completionHandler: @escaping ((_ success: Bool, _ error: Error?) -> Void)) {
+        facebookToken = nil
         
         let loginMethodErrorMessage = "Invalid Email or Password."
         let httpBody = [
@@ -29,6 +31,7 @@ class UdacityClient {
     }
     
     func loginUsingFacebook(accessToken: String, completionHandler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
+        facebookToken = accessToken
         
         let loginMethodErrorMessage = "Could not log in using Facebook. Ensure your Facebook account is connected with your Udacity account."
         let httpBody = [
@@ -46,20 +49,26 @@ class UdacityClient {
         
         getUserId(loginMethodErrorMessage: loginMethodErrorMessage, httpBody: httpBody) { userId, error in
             
+            func executeCompletionHandler(success: Bool, error: Error?) {
+                DispatchQueue.main.async {
+                    completionHandler(success, error)
+                }
+            }
+            
             guard let userId = userId, error == nil else {
-                completionHandler(false, error)
+                executeCompletionHandler(success: false, error: error)
                 return
             }
             
             self.getUserData(userId: userId) { userName, error in
                 
                 guard let userName = userName, error == nil else {
-                    completionHandler(false, error)
+                    executeCompletionHandler(success: false, error: error)
                     return
                 }
                 
                 self.userData = User(userId: userId, firstName: userName.0, lastName: userName.1)
-                completionHandler(true, nil)
+                executeCompletionHandler(success: true, error: nil)
             }
             
         }

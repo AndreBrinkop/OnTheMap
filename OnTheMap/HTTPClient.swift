@@ -14,7 +14,6 @@ class HTTPClient {
     
     static let session = URLSession.shared
     
-    
     // MARK: Convenience Methods
     
     static func getRequest(url: URL, headerFields: [String : String]?, completionHandler: @escaping (_ result: Data?, _ error: Error?) -> Void) {
