@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FacebookCore
 import FacebookLogin
 
 class UdacityClient {
@@ -32,7 +33,13 @@ class UdacityClient {
         login(loginMethodErrorMessage: loginMethodErrorMessage, httpBody: httpBody as [String : AnyObject]?, completionHandler: completionHandler)
     }
     
-    func loginUsingFacebook(accessToken: String, completionHandler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
+    func loginUsingFacebook(completionHandler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
+        
+        guard let accessToken = FacebookCore.AccessToken.current?.authenticationToken else {
+            completionHandler(false, HTTPClient.createError(domain: "loginUsingFacebook", error: "You are not logged into Facebook"))
+            return
+        }
+        
         facebookToken = accessToken
         
         let loginMethodErrorMessage = "Could not log in using Facebook. Ensure your Facebook account is connected with your Udacity account."

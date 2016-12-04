@@ -9,7 +9,6 @@
 import UIKit
 import SafariServices
 import FacebookLogin
-import FacebookCore
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -78,7 +77,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             case .success (_, _, let accessToken):
                 print("Connected to Facebook. Token: \(accessToken.authenticationToken)")
                 
-                UdacityClient.shared.loginUsingFacebook(accessToken: accessToken.authenticationToken) { success, error in
+                UdacityClient.shared.loginUsingFacebook() { success, error in
                     self.handleLoginResponse(loginMethod: "Facebook", success: success, error: error)
                 }
             }
