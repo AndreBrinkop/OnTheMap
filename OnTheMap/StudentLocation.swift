@@ -6,9 +6,12 @@
 //  Copyright © 2016 André Brinkop. All rights reserved.
 //
 
+import Foundation
+
 struct StudentLocation {
     var id: String
     var firstName: String
     var lastName: String
+    var url: URL?
     // TODO add location
 }

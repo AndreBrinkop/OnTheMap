@@ -20,6 +20,7 @@
 		90F23B151DF4501B008A6A54 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F23B141DF4501B008A6A54 /* ParseConstants.swift */; };
 		90F23B171DF46377008A6A54 /* LocationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F23B161DF46377008A6A54 /* LocationDataSource.swift */; };
 		90F23B191DF463FD008A6A54 /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F23B181DF463FD008A6A54 /* StudentLocation.swift */; };
+		90F23B1C1DF469FF008A6A54 /* LocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F23B1B1DF469FF008A6A54 /* LocationTableViewController.swift */; };
 		90F60C401DEDBBDA009BB5D8 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F60C3F1DEDBBDA009BB5D8 /* CustomButton.swift */; };
 		90F60C421DEE1FC1009BB5D8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F60C411DEE1FC1009BB5D8 /* Constants.swift */; };
 		90F60C471DEEF748009BB5D8 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90F60C441DEEF720009BB5D8 /* Roboto-Medium.ttf */; };
@@ -71,6 +72,7 @@
 		90F23B141DF4501B008A6A54 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
 		90F23B161DF46377008A6A54 /* LocationDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDataSource.swift; sourceTree = "<group>"; };
 		90F23B181DF463FD008A6A54 /* StudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
+		90F23B1B1DF469FF008A6A54 /* LocationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewController.swift; sourceTree = "<group>"; };
 		90F60C3F1DEDBBDA009BB5D8 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		90F60C411DEE1FC1009BB5D8 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		90F60C441DEEF720009BB5D8 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			children = (
 				9036DEAD1DED7E2800567827 /* LoginViewController.swift */,
 				90A13E0E1DF43D6300F71FC2 /* TabBarViewController.swift */,
+				90F23B1B1DF469FF008A6A54 /* LocationTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				9036DEAC1DED7E2800567827 /* AppDelegate.swift in Sources */,
 				90F23B171DF46377008A6A54 /* LocationDataSource.swift in Sources */,
 				90AB89B61DF0224D001DC8DB /* UdacityConstants.swift in Sources */,
+				90F23B1C1DF469FF008A6A54 /* LocationTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

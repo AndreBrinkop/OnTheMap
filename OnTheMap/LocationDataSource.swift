@@ -40,10 +40,18 @@ class LocationDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let studentLocation = studentLocations[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell")!
+        
         cell.imageView?.image = #imageLiteral(resourceName: "Pin")
-        cell.textLabel?.text = "Text"
-        cell.detailTextLabel?.text = "Detail"
+        cell.textLabel?.text = ("\(studentLocation.firstName) \(studentLocation.lastName)")
+        
+        var detailText = ""
+        if let url = studentLocation.url {
+            detailText = url.absoluteString
+        }
+        
+        cell.detailTextLabel?.text = detailText
         
         return cell
     }
