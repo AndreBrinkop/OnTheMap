@@ -161,19 +161,30 @@
                     <view key="view" contentMode="scaleToFill" id="KlL-HQ-OCb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="T8T-aT-cwM">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="T8T-aT-cwM" firstAttribute="top" secondItem="KlL-HQ-OCb" secondAttribute="top" id="7S7-ar-k4D"/>
+                            <constraint firstItem="T8T-aT-cwM" firstAttribute="leading" secondItem="KlL-HQ-OCb" secondAttribute="leading" id="LKe-qK-Ayq"/>
+                            <constraint firstAttribute="bottom" secondItem="T8T-aT-cwM" secondAttribute="bottom" id="qIa-xF-rLU"/>
+                            <constraint firstAttribute="trailing" secondItem="T8T-aT-cwM" secondAttribute="trailing" id="xXB-5y-w1a"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="Map" id="ff9-zd-7Tz"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rq7-e9-70Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1859" y="-213"/>
+            <point key="canvasLocation" x="1858.4000000000001" y="-213.64317841079463"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a92-LV-lR6">
             <objects>
                 <navigationController id="AO1-k5-jMC" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dqM-Tm-cZ7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dqM-Tm-cZ7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
