@@ -17,6 +17,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     var activeTextField: UITextField?
+    @IBOutlet var loginButton: CustomButton!
     var backgroundGradient: CAGradientLayer?
 
     // MARK: Initialization
@@ -56,6 +57,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        loginButton.startSpinning()
+        
         if let activeTextField = activeTextField {
             activeTextField.resignFirstResponder()
             self.activeTextField = nil
@@ -67,6 +70,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginUsingFacebook() {
+
         let loginManager = LoginManager()
         loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
             switch loginResult {
@@ -76,6 +80,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 print("User cancelled facebook login.")
             case .success (_, _, let accessToken):
                 print("Connected to Facebook. Token: \(accessToken.authenticationToken)")
+                
+                self.loginButton.startSpinning()
                 
                 UdacityClient.shared.loginUsingFacebook() { success, error in
                     self.handleLoginResponse(loginMethod: "Facebook", success: success, error: error)
@@ -87,6 +93,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     // MARK: Login Workflow
     
     func handleLoginResponse(loginMethod: String, success: Bool, error: Error?) {
+        
         guard error == nil, let userData = UdacityClient.shared.userData else {
             self.displayCouldNotLoginMessage(message: "\(error!.localizedDescription)")
             print("Could not log in!", error!.localizedDescription)
@@ -94,6 +101,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         print("Logged in using \(loginMethod)! User ID: \(userData.userId), First Name: \"\(userData.firstName)\", Last Name: \"\(userData.lastName)\"")
+        
+        // reset UI
+        emailTextField.text = ""
+        passwordTextField.text = ""
+        loginButton.stopSpinning()
+        
+        // performSegue(withIdentifier: "loggedIn", sender: nil)
     }
 
     @IBAction func signUpForNewAccount() {
@@ -107,6 +121,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let alertController = UIAlertController(title: "Could not log in!", message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
+        loginButton.stopSpinning()
     }
     
     // MARK: UITextFieldDelegate

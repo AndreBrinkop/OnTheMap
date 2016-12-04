@@ -12,32 +12,56 @@ class CustomButton: UIButton {
 
     // MARK: Constants
 
-    let titleLabelColor = UIColor.white
+    private let titleLabelColor = UIColor.white
     
-    let cornerRadius: CGFloat = 5.0
-    let titleLabelFontSize: CGFloat = 17.0
+    private let cornerRadius: CGFloat = 5.0
+    private let titleLabelFontSize: CGFloat = 17.0
+    
+    // MARK: Properties
+    
+    private var activityIndicator: UIActivityIndicatorView!
 
     
     // MARK: Initialization
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        styleLoginButton()
+        setUpButton()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        styleLoginButton()
+        setUpButton()
     }
     
-    private func styleLoginButton() {
+    private func setUpButton() {
+        
+        // Styling
         backgroundColor = Color.defaultColor
         setTitleColor(titleLabelColor, for: UIControlState())
         titleLabel?.font = UIFont.systemFont(ofSize: titleLabelFontSize)
         layer.cornerRadius = cornerRadius
-
+        
+        setUpActivityIndicator()
     }
     
+    private func setUpActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(activityIndicator)
+        
+        setActivityIndicatorPosition()
+    }
+    
+    private func setActivityIndicatorPosition() {
+        let xPositionConstraint = NSLayoutConstraint(item: self, attribute: .centerX, relatedBy: .equal, toItem: activityIndicator, attribute: .centerX, multiplier: 1, constant: 0)
+        
+        let yPositionConstraint = NSLayoutConstraint(item: self, attribute: .centerY, relatedBy: .equal, toItem: activityIndicator, attribute: .centerY, multiplier: 1, constant: 0)
+        
+        self.addConstraint(xPositionConstraint)
+        self.addConstraint(yPositionConstraint)
+    }
 
     // MARK: Tracking
     
@@ -54,6 +78,16 @@ class CustomButton: UIButton {
         backgroundColor = Color.defaultColor
     }
     
-
+    // MARK: Activity Indicator
+    
+    func startSpinning() {
+        self.titleLabel?.layer.opacity = 0.0
+        activityIndicator.startAnimating()
+    }
+    
+    func stopSpinning() {
+        self.titleLabel?.layer.opacity = 1.0
+        activityIndicator.stopAnimating()
+    }
 
 }
