@@ -15,12 +15,14 @@ class LocationDataSource: NSObject, UITableViewDataSource {
     private(set) var studentLocations = [StudentLocation]()
     
     // MARK: Initialization
+    
     override init() {
         super.init()
         updateData()
     }
     
     // MARK: Update the Data
+    
     public func updateData() {
         self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateStarted)
         
@@ -36,11 +38,13 @@ class LocationDataSource: NSObject, UITableViewDataSource {
     }
     
     // MARK: Notifications
+    
     private func sendNotification(notificationName: String) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationName), object: nil)
     }
     
     // MARK: Table View Data Source
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return studentLocations.count
     }

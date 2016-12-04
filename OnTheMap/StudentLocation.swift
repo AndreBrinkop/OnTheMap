@@ -13,5 +13,6 @@ struct StudentLocation {
     var firstName: String
     var lastName: String
     var url: URL?
-    // TODO add location
+    var latitude: Float
+    var longitude: Float
 }

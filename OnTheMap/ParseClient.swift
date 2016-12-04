@@ -10,7 +10,9 @@ import Foundation
 
 class ParseClient {
     
-    func getLastPostedLocations(completionHandler: ([StudentLocation]?, Error?) -> ()) {
+    // MARK: API Methods
+    
+    func getLastPostedLocations(completionHandler: @escaping ([StudentLocation]?, Error?) -> ()) {
         let parameters = [
             ParameterKeys.limit: ParameterValues.limit as AnyObject,
             ParameterKeys.order: ParameterValues.mostRecent as AnyObject
@@ -24,9 +26,62 @@ class ParseClient {
         ]
         
         HTTPClient.getRequest(url: url, headerFields: headerFields) { data, error in
-            //print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
-            // TODO parsing
+            let parsedResult = HTTPClient.parseData(data: data)
+            
+            guard let parsedData = parsedResult.parsedData, parsedResult.error == nil else {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let studentLocations = self.parseStudentLocations(parsedData: parsedData) else {
+                completionHandler(nil, HTTPClient.createError(domain: "parseStudentLocations", error: "Could not parse student locations."))
+                return
+            }
+            
+            completionHandler(studentLocations, nil)
         }
+        
+    }
+    
+    // MARK: Parser
+    
+    private func parseStudentLocations(parsedData: [String : AnyObject]) -> [StudentLocation]? {
+        
+        guard let results = parsedData[JSONResponseKeys.results] as? [AnyObject] else {
+            return nil
+        }
+        
+        var studentLocations = [StudentLocation]()
+        for result in results {
+            
+            // mandatory fields
+            guard let latitude = result[JSONResponseKeys.latitude] as? Float, let longitude = result[JSONResponseKeys.longitude] as? Float else {
+                // invalid entry
+                continue
+            }
+            
+            var firstName = DefaultValues.firstName
+            var lastName = DefaultValues.lastName
+            var key = DefaultValues.key
+            var url: URL?
+            
+            if let parsedFirstName = result[JSONResponseKeys.firstName] as? String {
+                firstName = parsedFirstName
+            }
+            if let parsedLastName = result[JSONResponseKeys.lastName] as? String {
+                lastName = parsedLastName
+            }
+            if let parsedKey = result[JSONResponseKeys.key] as? String {
+                key = parsedKey
+            }
+            if let parsedUrl = result[JSONResponseKeys.url] as? URL {
+                url = parsedUrl
+            }
+
+            studentLocations.append(StudentLocation(id: key, firstName: firstName, lastName: lastName, url: url, latitude: latitude, longitude: longitude))
+        }
+        
+        return studentLocations.isEmpty ? nil : studentLocations
         
     }
     

@@ -10,7 +10,12 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
+    // MARK: Properties
+    
     private let dataSource = LocationDataSource.shared
+    
+    
+    // MARK: Actions
     
     @IBAction func logout() {
         self.dismiss(animated: true) {

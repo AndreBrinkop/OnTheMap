@@ -11,9 +11,14 @@ import UIKit
 
 class LocationTableViewController: UIViewController, UITableViewDelegate {
     
+    // MARK: Properties
+    
     private let dataSource = LocationDataSource.shared
     @IBOutlet var tableView: UITableView!
 
+    
+    // MARK: Initialization
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = dataSource
@@ -21,6 +26,7 @@ class LocationTableViewController: UIViewController, UITableViewDelegate {
     }
 
     // MARK: Table View Delegate
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let studentLocation = dataSource.studentLocations[indexPath.row]
         

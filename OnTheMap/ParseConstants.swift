@@ -45,6 +45,24 @@ extension ParseClient {
         static let location = "/StudentLocation"
     }
     
+    // MARK: JSONResponseKeys
+    
+    struct JSONResponseKeys {
+        static let results = "results"
+        static let firstName = "firstName"
+        static let lastName = "lastName"
+        static let latitude = "latitude"
+        static let longitude = "longitude"
+        static let key = "uniqueKey"
+        static let url = "mediaURL"
+    }
+    
+    struct DefaultValues {
+        static let firstName = "[Unknown First Name]"
+        static let lastName = "[Unknown Last Name]"
+        static let key = "[Missing Key]"
+    }
+    
     // MARK: Notifications
     struct Notifications {
         static let locationsUpdateStarted = "LocationsUpdateStarted"
