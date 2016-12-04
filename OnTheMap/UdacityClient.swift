@@ -221,9 +221,13 @@ class UdacityClient {
         urlComponents.path = RequestConstants.apiPath + (withPathExtension ?? "")
         
         if let parameters = parameters {
+            if urlComponents.queryItems == nil {
+                urlComponents.queryItems = [URLQueryItem]()
+            }
+            
             for (key, value) in parameters {
                 let queryItem = URLQueryItem(name: key, value: "\(value)")
-                urlComponents.queryItems!.append(queryItem)
+                urlComponents.queryItems?.append(queryItem)
             }
         }
         

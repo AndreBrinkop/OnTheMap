@@ -14,9 +14,16 @@ class LocationDataSource: NSObject, UITableViewDataSource {
     private var parseClient = ParseClient.shared
     private(set) var studentLocations = [StudentLocation]()
     
-    // MARK: Update the Data
+    // MARK: Initialization
+    override init() {
+        super.init()
+        updateData()
+    }
     
+    // MARK: Update the Data
     public func updateData() {
+        self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateStarted)
+        
         parseClient.getLastPostedLocations() { (studentLocations, error) in
             guard let studentLocations = studentLocations, error == nil else {
                 self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateError)
@@ -29,7 +36,6 @@ class LocationDataSource: NSObject, UITableViewDataSource {
     }
     
     // MARK: Notifications
-    
     private func sendNotification(notificationName: String) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationName), object: nil)
     }

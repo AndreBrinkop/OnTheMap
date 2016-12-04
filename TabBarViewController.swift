@@ -10,6 +10,8 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
+    private let dataSource = LocationDataSource.shared
+    
     @IBAction func logout() {
         self.dismiss(animated: true) {
             UdacityClient.shared.logout() { error in
@@ -26,7 +28,7 @@ class TabBarViewController: UITabBarController {
     }
     
     @IBAction func refreshLocations() {
-        
+        dataSource.updateData()
     }
     
 }
