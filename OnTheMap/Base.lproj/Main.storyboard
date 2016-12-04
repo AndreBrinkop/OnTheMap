@@ -188,12 +188,24 @@
         <!--On The Map-->
         <scene sceneID="NrV-3d-vhw">
             <objects>
-                <tabBarController id="4qK-o1-6sb" sceneMemberID="viewController">
+                <tabBarController id="4qK-o1-6sb" customClass="TabBarViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="On The Map" id="8o7-va-IbO">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="y5V-HF-zy0"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="y5V-HF-zy0">
+                            <connections>
+                                <action selector="logout" destination="4qK-o1-6sb" id="Y5F-8F-PBa"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="refresh" id="ZFk-pB-YoU"/>
-                            <barButtonItem image="Pin" id="1pT-Hj-mfd"/>
+                            <barButtonItem systemItem="refresh" id="ZFk-pB-YoU">
+                                <connections>
+                                    <action selector="refreshLocations" destination="4qK-o1-6sb" id="xBc-Xm-Sbg"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="Pin" id="1pT-Hj-mfd">
+                                <connections>
+                                    <action selector="addLocation" destination="4qK-o1-6sb" id="fSh-Td-rJs"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Gwo-rp-Pun">

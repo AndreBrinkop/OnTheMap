@@ -12,6 +12,7 @@
 		9036DEB11DED7E2800567827 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9036DEAF1DED7E2800567827 /* Main.storyboard */; };
 		9036DEB31DED7E2800567827 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9036DEB21DED7E2800567827 /* Assets.xcassets */; };
 		9036DEB61DED7E2800567827 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9036DEB41DED7E2800567827 /* LaunchScreen.storyboard */; };
+		90A13E0F1DF43D6300F71FC2 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A13E0E1DF43D6300F71FC2 /* TabBarViewController.swift */; };
 		90AB89B41DF0223F001DC8DB /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AB89B31DF0223F001DC8DB /* UdacityClient.swift */; };
 		90AB89B61DF0224D001DC8DB /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AB89B51DF0224D001DC8DB /* UdacityConstants.swift */; };
 		90AB89B81DF03FD7001DC8DB /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AB89B71DF03FD7001DC8DB /* HTTPClient.swift */; };
@@ -58,6 +59,7 @@
 		9036DEB21DED7E2800567827 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9036DEB51DED7E2800567827 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9036DEB71DED7E2800567827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90A13E0E1DF43D6300F71FC2 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarViewController.swift; path = ../TabBarViewController.swift; sourceTree = "<group>"; };
 		90AB89B31DF0223F001DC8DB /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		90AB89B51DF0224D001DC8DB /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 		90AB89B71DF03FD7001DC8DB /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				90F60C431DEEF708009BB5D8 /* Resources */,
 				9036DEAB1DED7E2800567827 /* AppDelegate.swift */,
 				9036DEAD1DED7E2800567827 /* LoginViewController.swift */,
+				90A13E0E1DF43D6300F71FC2 /* TabBarViewController.swift */,
 				9036DEAF1DED7E2800567827 /* Main.storyboard */,
 				9036DEB41DED7E2800567827 /* LaunchScreen.storyboard */,
 				9036DEB71DED7E2800567827 /* Info.plist */,
@@ -256,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90A13E0F1DF43D6300F71FC2 /* TabBarViewController.swift in Sources */,
 				90AB89B41DF0223F001DC8DB /* UdacityClient.swift in Sources */,
 				9036DEAE1DED7E2800567827 /* LoginViewController.swift in Sources */,
 				90F60C421DEE1FC1009BB5D8 /* Constants.swift in Sources */,

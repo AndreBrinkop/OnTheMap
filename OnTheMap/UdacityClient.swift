@@ -70,6 +70,11 @@ class UdacityClient {
             let data = self.formatData(data: data)
             let parsedResult = HTTPClient.parseData(data: data)
             
+            guard error == nil else {
+                completionHandler(error)
+                return
+            }
+            
             guard parsedResult.error == nil, parsedResult.parsedData != nil else {
                 completionHandler(parsedResult.error)
                 return
