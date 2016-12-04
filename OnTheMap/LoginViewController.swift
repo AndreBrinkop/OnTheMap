@@ -107,7 +107,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.text = ""
         loginButton.stopSpinning()
         
-        // performSegue(withIdentifier: "loggedIn", sender: nil)
+        performSegue(withIdentifier: "loggedIn", sender: nil)
     }
 
     @IBAction func signUpForNewAccount() {

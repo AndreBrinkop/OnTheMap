@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -121,15 +122,99 @@
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="Kgb-bN-wJe" id="R8g-q9-7nO"/>
+                        <outlet property="loginButton" destination="aj2-35-bus" id="4Jb-Rb-jgF"/>
                         <outlet property="passwordTextField" destination="aOX-I6-Chh" id="M6c-mH-LDI"/>
+                        <segue destination="AO1-k5-jMC" kind="show" identifier="loggedIn" id="ggl-cf-VAy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="117.59999999999999" y="123.68815592203899"/>
+            <point key="canvasLocation" x="-929" y="116"/>
+        </scene>
+        <!--List-->
+        <scene sceneID="Ux8-pE-pS2">
+            <objects>
+                <viewController id="jKD-BH-aiE" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="raL-Pe-z8C"/>
+                        <viewControllerLayoutGuide type="bottom" id="gsK-fe-zxM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6PD-lN-ZUi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" tag="1" title="List" image="List" id="QRi-9U-2Lb"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ojM-Aw-WjC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1859" y="442"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="c4K-sm-g1M">
+            <objects>
+                <viewController id="AEQ-T5-0Kl" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ylj-tB-CFB"/>
+                        <viewControllerLayoutGuide type="bottom" id="qog-4D-8Nr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KlL-HQ-OCb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" image="Map" id="ff9-zd-7Tz"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rq7-e9-70Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1859" y="-213"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="a92-LV-lR6">
+            <objects>
+                <navigationController id="AO1-k5-jMC" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dqM-Tm-cZ7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="4qK-o1-6sb" kind="relationship" relationship="rootViewController" id="MHJ-ou-nd0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ain-sP-o4X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="14" y="116"/>
+        </scene>
+        <!--On The Map-->
+        <scene sceneID="NrV-3d-vhw">
+            <objects>
+                <tabBarController id="4qK-o1-6sb" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" title="On The Map" id="8o7-va-IbO">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="y5V-HF-zy0"/>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="refresh" id="ZFk-pB-YoU"/>
+                            <barButtonItem image="Pin" id="1pT-Hj-mfd"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Gwo-rp-Pun">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="AEQ-T5-0Kl" kind="relationship" relationship="viewControllers" id="QP2-g8-ocm"/>
+                        <segue destination="jKD-BH-aiE" kind="relationship" relationship="viewControllers" id="v8g-jb-6hF"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y9x-ps-DWQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="924" y="116"/>
         </scene>
     </scenes>
     <resources>
+        <image name="List" width="32" height="32"/>
+        <image name="Map" width="32" height="32"/>
+        <image name="Pin" width="32" height="32"/>
         <image name="UdacityLogo" width="80" height="80"/>
     </resources>
 </document>
