@@ -7,12 +7,19 @@
 //
 
 import Foundation
+import MapKit
 
 struct StudentLocation {
     var id: String
     var firstName: String
     var lastName: String
+    var fullName: String { return "\(firstName) \(lastName)" }
+    
     var url: URL?
     var latitude: Float
     var longitude: Float
+    var coordinate: CLLocationCoordinate2D {
+        let lat = CLLocationDegrees(latitude)
+        let long = CLLocationDegrees(longitude)
+        return CLLocationCoordinate2D(latitude: lat, longitude: long)}
 }
