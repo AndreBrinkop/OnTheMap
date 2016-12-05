@@ -9,7 +9,7 @@
 import MapKit
 import UIKit
 
-class PostLocationViewController: UIViewController {
+class PostLocationViewController: TextFieldDelegateViewController {
 
     // MARK: Properties
     
@@ -35,10 +35,14 @@ class PostLocationViewController: UIViewController {
     private enum InputState { case locationInput, urlInput }
     private var currentInputState: InputState = .locationInput
     
+    // MARK: Initialization
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
+    
+    // MARK: UI Configuration
     
     private func configureUI() {
         studyingLabel.textColor = Color.defaultColor
@@ -71,6 +75,8 @@ class PostLocationViewController: UIViewController {
         
 
     }
+    
+    // MARK: Actions
 
     @IBAction func cancel() {
         dismiss(animated: true, completion: nil)
@@ -88,4 +94,13 @@ class PostLocationViewController: UIViewController {
         configureUI()
         
     }
+    
+    // MARK: Text Field Handling
+    
+    override func textFieldInputComplete() {
+        super.textFieldInputComplete()
+        confirm()
+    }
+    
+    
 }

@@ -10,13 +10,12 @@ import UIKit
 import SafariServices
 import FacebookLogin
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: TextFieldDelegateViewController {
 
     // MARK: Properties
     
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
-    var activeTextField: UITextField?
     @IBOutlet var loginButton: CustomButton!
     var backgroundGradient: CAGradientLayer?
 
@@ -31,16 +30,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         backgroundGradient!.frame = self.view.bounds
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        subscribeToKeyboardNotifications()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        unsubscribeFromKeyboardNotifications()
     }
     
     // MARK: Login and Sign Up
@@ -124,87 +113,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginButton.stopSpinning()
     }
     
-    // MARK: UITextFieldDelegate
+    // MARK: Text Field Handling
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        guard let text = textField.text, text != "" else {
-            textField.resignFirstResponder()
-            return false
-        }
-        
-        let nextTag = textField.tag + 1;
-        let nextResponder = textField.superview?.viewWithTag(nextTag) as UIResponder!
-        
-        if (nextResponder != nil){
-            nextResponder?.becomeFirstResponder()
-        }
-        else
-        {
-            activeTextField?.resignFirstResponder()
-            activeTextField = nil
-            loginUsingEmailAndPassword()
-        }
-        return false
-
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        activeTextField = nil
-    }
-    
-    // MARK: KeyboardNotifications
-    
-    func subscribeToKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-    }
-    
-    func unsubscribeFromKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-    }
-    
-    var viewShiftValue: CGFloat = 0.0
-    
-    func keyboardWillShow(notification: NSNotification) {
-        shiftKeyboardBack()
-        
-        if let localActiveTextFieldFrame = activeTextField?.frame {
-            
-            let globalActiveTextFieldFrame = activeTextField?.superview?.convert(localActiveTextFieldFrame, to: view)
-            let activeTextFieldMaxY = globalActiveTextFieldFrame!.maxY
-            
-            let keyboardMinY = view.frame.maxY - getKeyboardHeight(notification: notification)
-            
-            if activeTextFieldMaxY > keyboardMinY {
-
-                viewShiftValue = getKeyboardHeight(notification: notification)
-                viewShiftValue = viewShiftValue - (view.frame.maxY - activeTextFieldMaxY)
-                view.frame.origin.y -= viewShiftValue
-            }
-        }
-    }
-    
-    func keyboardWillHide() {
-        shiftKeyboardBack()
-    }
-    
-    private func shiftKeyboardBack() {
-        if viewShiftValue != 0.0 {
-            view.frame.origin.y += viewShiftValue
-            viewShiftValue = 0.0
-        }
-    }
-    
-    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        return keyboardSize.cgRectValue.height
+    override func textFieldInputComplete() {
+        super.textFieldInputComplete()
+        loginUsingEmailAndPassword()
     }
     
     // MARK: Gradient Background
