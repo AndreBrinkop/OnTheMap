@@ -13,7 +13,10 @@ class LocationDataSource: NSObject, UITableViewDataSource {
     
     private var parseClient = ParseClient.shared
     private(set) var studentLocations = [StudentLocation]()
+    private(set) var didUserAlreadyPostLocation: Bool = false
     private(set) var isRefreshing = false
+    
+    private let udacityClient = UdacityClient.shared
     
     // MARK: Initialization
     
@@ -28,9 +31,19 @@ class LocationDataSource: NSObject, UITableViewDataSource {
         self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateStarted)
         isRefreshing = true
         
-        parseClient.getLastPostedLocations() { (studentLocations, error) in
-            self.isRefreshing = false
-            DispatchQueue.main.async {
+        // Check if userId already posted location
+        parseClient.getLastPostedLocationOfUser(userId: udacityClient.userData!.userId) { studentLocation, error in
+            guard error == nil else {
+                self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateFailed)
+                return
+            }
+            
+            self.didUserAlreadyPostLocation = studentLocation != nil
+            
+            // Get last posted Locations of all Users
+            self.parseClient.getLastPostedLocations() { (studentLocations, error) in
+                self.isRefreshing = false
+
                 guard let studentLocations = studentLocations, error == nil else {
                     self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateFailed)
                     return

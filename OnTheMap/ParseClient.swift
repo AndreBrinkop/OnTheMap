@@ -16,7 +16,7 @@ class ParseClient {
     func getLastPostedLocationOfUser(userId: String, completionHandler: @escaping (StudentLocation?, Error?) -> ()) {
         let parameters = [
             ParameterKeys.limit: ParameterValues.singleObjectLimit as AnyObject,
-            ParameterKeys.query: "{\"\(ParameterKeys.query)\": \"\(userId)\"}" as AnyObject
+            ParameterKeys.query: "{\"\(ParameterKeys.uniqueKey)\": \"\(userId)\"}" as AnyObject
         ]
         
         getLocations(parameters: parameters, completionHandler: {studentLocations, error in
@@ -29,7 +29,7 @@ class ParseClient {
                 completionHandler(nil, error)
                 return
             }
-            
+
             completionHandler(studentLocations.first, nil)
         })
     }
