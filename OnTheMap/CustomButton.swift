@@ -20,6 +20,8 @@ class CustomButton: UIButton {
     // MARK: Properties
     
     private var activityIndicator: UIActivityIndicatorView!
+    public var buttonColor: UIColor = Color.defaultColor
+    public var buttonClickColor: UIColor = Color.darkDefaultColor
 
     
     // MARK: Initialization
@@ -66,16 +68,16 @@ class CustomButton: UIButton {
     // MARK: Tracking
     
     override func beginTracking(_ touch: UITouch, with withEvent: UIEvent?) -> Bool {
-        backgroundColor = Color.darkColor
+        backgroundColor = buttonClickColor
         return true
     }
     
     override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
-        backgroundColor = Color.defaultColor
+        backgroundColor = buttonColor
     }
     
     override func cancelTracking(with event: UIEvent?) {
-        backgroundColor = Color.defaultColor
+        backgroundColor = buttonColor
     }
     
     // MARK: Activity Indicator

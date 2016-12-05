@@ -213,7 +213,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = Color.defaultColor
         backgroundGradient = CAGradientLayer()
         let edgeColor = Color.defaultColor.cgColor
-        let middleColor = Color.lightColor.cgColor
+        let middleColor = Color.lightDefaultColor.cgColor
         
         backgroundGradient!.colors = [edgeColor, middleColor, middleColor, edgeColor]
         backgroundGradient!.locations = [0.0, 0.3, 0.7, 1.0]
