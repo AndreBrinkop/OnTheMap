@@ -25,6 +25,7 @@ class LocationViewController: UIViewController {
             showLoadingSpinner()
         } else {
             hideLoadingSpinner()
+            updateUI()
         }
     }
     
@@ -49,6 +50,11 @@ class LocationViewController: UIViewController {
     
     func didUpdateDataSource() {
         hideLoadingSpinner()
+        updateUI()
+    }
+    
+    func updateUI() {
+        preconditionFailure("This method must be overridden")
     }
     
     // MARK: Loading Spinner

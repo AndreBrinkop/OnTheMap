@@ -27,11 +27,13 @@ extension ParseClient {
     struct HeaderKeys {
         static let appId = "X-Parse-Application-Id"
         static let apiKey = "X-Parse-REST-API-Key"
+        static let contentType = "Content-Type"
     }
     
     struct HeaderValues {
         static let appId = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let apiKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+        static let contentType = "application/json"
     }
     
     // MARK: URLs
@@ -44,10 +46,26 @@ extension ParseClient {
     // MARK: Methods
     struct Methods {
         static let location = "/StudentLocation"
+        static let updateLocation = "/StudentLocation/<objectId>"
+    }
+    
+    // MARK: URL Keys
+    struct URLKeys {
+        static let objectId = "objectId"
+    }
+    
+    // MARK: BodyKeys
+    struct BodyKeys {
+        static let firstName = "firstName"
+        static let lastName = "lastName"
+        static let latitude = "latitude"
+        static let longitude = "longitude"
+        static let key = "uniqueKey"
+        static let url = "mediaURL"
+
     }
     
     // MARK: JSONResponseKeys
-    
     struct JSONResponseKeys {
         static let results = "results"
         static let firstName = "firstName"

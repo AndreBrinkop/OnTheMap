@@ -68,8 +68,7 @@ class LocationMapViewController: LocationViewController, MKMapViewDelegate {
     
     // MARK: Data Source Update
     
-    override func didUpdateDataSource() {
-        super.didUpdateDataSource()
+    override func updateUI() {
         
         var annotations = [MKPointAnnotation]()
         
@@ -87,7 +86,6 @@ class LocationMapViewController: LocationViewController, MKMapViewDelegate {
             self.mapView.addAnnotations(annotations)
         }
     }
-    
     
     // MARK: Loading Spinner
 

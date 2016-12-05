@@ -11,6 +11,14 @@ import UIKit
 
 class ParseClient {
     
+    // MARK: Properties
+    
+    private let headerFields = [
+        HeaderKeys.appId : HeaderValues.appId,
+        HeaderKeys.apiKey : HeaderValues.apiKey,
+        HeaderKeys.contentType : HeaderValues.contentType
+    ]
+    
     // MARK: API Methods
     
     func getLastPostedLocationOfUser(userId: String, completionHandler: @escaping (StudentLocation?, Error?) -> ()) {
@@ -43,15 +51,44 @@ class ParseClient {
         getLocations(parameters: parameters, completionHandler: completionHandler)
     }
     
-    // MARK: Get Locations Helper
+    func postLocation(location: StudentLocation, completionHandler: @escaping (Error?) -> ()) {
+        let updateExistingLocation : Bool = location.objectId != nil
+        
+        var pathExtension = Methods.location
+        if updateExistingLocation {
+            pathExtension = HTTPClient.substituteKeyInMethod(Methods.updateLocation, key: URLKeys.objectId, value: location.objectId!)!
+        }
+        let url = buildUrl(parameters: nil, withPathExtension: pathExtension)
+        
+        var httpBody = [
+            BodyKeys.firstName : location.firstName as AnyObject,
+            BodyKeys.lastName : location.lastName as AnyObject,
+            BodyKeys.latitude : location.coordinate.latitude as AnyObject,
+            BodyKeys.longitude : location.coordinate.longitude as AnyObject,
+            BodyKeys.key : location.id as AnyObject
+        ]
+        
+        if let postedUrl = location.url?.absoluteString {
+            httpBody[BodyKeys.url] = postedUrl as AnyObject
+        }
+        
+        let requestCompletionHandler = { (data: Data?, error: Error?) in
+            guard data != nil, error == nil else {
+                completionHandler(error)
+                return
+            }
+            completionHandler(nil)
+        }
+        
+        let httpMethod = updateExistingLocation ? "PUT" : "POST"
+        
+        HTTPClient.httpRequest(url: url, httpMethod: httpMethod, headerFields: headerFields, httpBody: httpBody, completionHandler: requestCompletionHandler)
+    }
+    
+    // MARK: API Method Helper
     
     private func getLocations(parameters: [String : AnyObject], completionHandler: @escaping ([StudentLocation]?, Error?) -> ()) {
         let url = buildUrl(parameters: parameters, withPathExtension: Methods.location)
-        
-        let headerFields = [
-            HeaderKeys.appId : HeaderValues.appId,
-            HeaderKeys.apiKey : HeaderValues.apiKey
-        ]
         
         HTTPClient.getRequest(url: url, headerFields: headerFields) { data, error in
             let parsedResult = HTTPClient.parseData(data: data)

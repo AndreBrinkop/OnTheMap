@@ -32,6 +32,7 @@ class PostLocationViewController: TextFieldDelegateViewController {
     let locationConfirmButtonText: String = "Find on the Map"
     let linkConfirmButtonText: String = "Submit"
     
+    let locationDataSource = LocationDataSource.shared
     var selectedLocation: CLLocationCoordinate2D?
     
     // MARK: State Properties
@@ -95,8 +96,11 @@ class PostLocationViewController: TextFieldDelegateViewController {
     }
     
     @IBAction func confirm() {
-        if currentInputState == .locationInput {
+        switch currentInputState {
+        case .locationInput:
             searchLocation()
+        case .urlInput:
+            postLocation()
         }
     }
     
@@ -127,6 +131,35 @@ class PostLocationViewController: TextFieldDelegateViewController {
         }
     }
     
+    func postLocation() {
+        guard !linkTextField.text!.isEmpty, linkTextField.text != linkTextFieldText else {
+            displayErrorMessage(message: "Please enter a Link!")
+            return
+        }
+        
+        self.showLoadingSpinner()
+        
+        let link: URL? = URL(string: linkTextField.text!)
+        
+        guard let url = link, UIApplication.shared.canOpenURL(link!) else {
+            displayErrorMessage(message: "Please enter a valid Link!\n(e.g. http://www.google.de)")
+            return
+        }
+        
+        let location = StudentLocation(id: locationDataSource.userData.userId, objectId: locationDataSource.knownObjectId, firstName: locationDataSource.userData.firstName, lastName: locationDataSource.userData.lastName, url: url, latitude: Float(selectedLocation!.latitude), longitude: Float(selectedLocation!.longitude))
+        
+        ParseClient.shared.postLocation(location: location) { (error: Error?) in
+            guard error == nil else {
+                self.displayErrorMessage(title: "Your Location Could not be Posted", message: error!.localizedDescription)
+                return
+            }
+            
+            self.locationDataSource.updateData()
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+    }
+    
     // MARK: Text Field Handling
     
     override func textFieldInputComplete() {
@@ -146,9 +179,9 @@ class PostLocationViewController: TextFieldDelegateViewController {
     
     // MARK: Helper
     
-    func displayErrorMessage(message: String) {
+    func displayErrorMessage(title: String = "", message: String) {
         hideLoadingSpinner()
-        let alertController = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }

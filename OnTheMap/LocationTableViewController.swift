@@ -40,9 +40,8 @@ class LocationTableViewController: LocationViewController, UITableViewDelegate {
     }
     
     // MARK: Data Source Update
-    
-    override func didUpdateDataSource() {
-        super.didUpdateDataSource()
+
+    override func updateUI() {
         tableView.reloadData()
     }
     

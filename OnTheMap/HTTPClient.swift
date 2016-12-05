@@ -25,6 +25,10 @@ class HTTPClient {
         httpRequest(url: url, httpMethod: "POST", headerFields: headerFields, httpBody: httpBody, completionHandler: completionHandler)
     }
     
+    static func putRequest(url: URL, headerFields: [String : String]?, httpBody: [String : AnyObject]?, completionHandler: @escaping (_ result: Data?, _ error: Error?) -> Void) {
+        httpRequest(url: url, httpMethod: "PUT", headerFields: headerFields, httpBody: httpBody, completionHandler: completionHandler)
+    }
+    
     static func deleteRequest(url: URL, headerFields: [String : String]?, completionHandler: @escaping (_ result: Data?, _ error: Error?) -> Void) {
         httpRequest(url: url, httpMethod: "DELETE", headerFields: headerFields, httpBody: nil, completionHandler: completionHandler)
     }
@@ -32,10 +36,9 @@ class HTTPClient {
     // MARK: Request Method
     
     static func httpRequest(url: URL, httpMethod: String, headerFields: [String : String]?,  httpBody: [String : AnyObject]?, completionHandler: @escaping (_ result: Data?, _ error: Error?) -> Void) {
+  
         var request = URLRequest(url: url)
-        
         request.httpMethod = httpMethod
-        
         
         if let headerFields = headerFields {
             for headerField in headerFields {
@@ -85,7 +88,6 @@ class HTTPClient {
     // MARK: Check for Errors
     
     static private func checkForError(data: Data?, response: URLResponse?, error: Error?) -> Error? {
-        
         /* GUARD: Was there an error? */
         guard (error == nil) else {
             return error
