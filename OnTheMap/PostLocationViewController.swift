@@ -26,6 +26,8 @@ class PostLocationViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
     
     @IBOutlet var confirmButton: CustomButton!
+    let locationConfirmButtonText: String = "Find on the Map"
+    let linkConfirmButtonText: String = "Submit"
     
     
     // MARK: State Properties
@@ -39,12 +41,35 @@ class PostLocationViewController: UIViewController {
     }
     
     private func configureUI() {
-        cancelButton.titleLabel?.textColor = Color.darkDefaultColor
         studyingLabel.textColor = Color.defaultColor
         
-        topView.backgroundColor = Color.white
-        middleView.backgroundColor = Color.defaultColor
-        bottomView.backgroundColor = Color.white
+        if currentInputState == .locationInput {
+            cancelButton.titleLabel?.textColor = Color.darkDefaultColor
+            topView.backgroundColor = Color.white
+            studyingLabel.isHidden = false
+            linkTextField.isHidden = true
+            
+            locationTextField.isHidden = false
+            middleView.backgroundColor = Color.defaultColor
+            
+            bottomView.backgroundColor = Color.white
+            confirmButton.setTitle(locationConfirmButtonText, for: .normal)
+        }
+        
+        if currentInputState == .urlInput {
+            cancelButton.titleLabel?.textColor = Color.white
+            topView.backgroundColor = Color.defaultColor
+            studyingLabel.isHidden = true
+            linkTextField.isHidden = false
+
+            locationTextField.isHidden = true
+            middleView.backgroundColor = UIColor.clear
+            
+            bottomView.backgroundColor = Color.white.withAlphaComponent(0.5)
+            confirmButton.setTitle(linkConfirmButtonText, for: .normal)
+        }
+        
+
     }
 
     @IBAction func cancel() {
@@ -52,5 +77,15 @@ class PostLocationViewController: UIViewController {
     }
     
     @IBAction func confirm() {
+        
+        // TODO
+        if currentInputState == .locationInput {
+            currentInputState = .urlInput
+        } else {
+            currentInputState = .locationInput
+        }
+        
+        configureUI()
+        
     }
 }
