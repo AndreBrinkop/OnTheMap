@@ -13,14 +13,41 @@ class ParseClient {
     
     // MARK: API Methods
     
+    func getLastPostedLocationOfUser(userId: String, completionHandler: @escaping (StudentLocation?, Error?) -> ()) {
+        let parameters = [
+            ParameterKeys.limit: ParameterValues.singleObjectLimit as AnyObject,
+            ParameterKeys.query: "{\"\(ParameterKeys.query)\": \"\(userId)\"}" as AnyObject
+        ]
+        
+        getLocations(parameters: parameters, completionHandler: {studentLocations, error in
+            guard let studentLocations = studentLocations, error == nil else {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard !studentLocations.isEmpty else {
+                completionHandler(nil, error)
+                return
+            }
+            
+            completionHandler(studentLocations.first, nil)
+        })
+    }
+    
     func getLastPostedLocations(completionHandler: @escaping ([StudentLocation]?, Error?) -> ()) {
         let parameters = [
             ParameterKeys.limit: ParameterValues.limit as AnyObject,
             ParameterKeys.order: ParameterValues.mostRecent as AnyObject
         ]
         
+        getLocations(parameters: parameters, completionHandler: completionHandler)
+    }
+    
+    // MARK: Get Locations Helper
+    
+    private func getLocations(parameters: [String : AnyObject], completionHandler: @escaping ([StudentLocation]?, Error?) -> ()) {
         let url = buildUrl(parameters: parameters, withPathExtension: Methods.location)
-
+        
         let headerFields = [
             HeaderKeys.appId : HeaderValues.appId,
             HeaderKeys.apiKey : HeaderValues.apiKey
@@ -88,9 +115,7 @@ class ParseClient {
 
             studentLocations.append(StudentLocation(id: key, objectId: objectId, firstName: firstName, lastName: lastName, url: url, latitude: latitude, longitude: longitude))
         }
-        
-        return studentLocations.isEmpty ? nil : studentLocations
-        
+        return studentLocations
     }
     
     // MARK: Build API Request URL
@@ -107,7 +132,7 @@ class ParseClient {
                 if urlComponents.queryItems == nil {
                     urlComponents.queryItems = [URLQueryItem]()
                 }
-                
+
                 let queryItem = URLQueryItem(name: key, value: "\(value)")
                 urlComponents.queryItems!.append(queryItem)
             }

@@ -18,6 +18,7 @@ extension ParseClient {
     
     // MARK: ParameterValues
     struct ParameterValues {
+        static let singleObjectLimit = 1
         static let limit = 100
         static let mostRecent = "-updatedAt"
     }
