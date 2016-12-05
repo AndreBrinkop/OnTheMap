@@ -130,18 +130,35 @@
 		9036DEAA1DED7E2800567827 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
-				90F23B1A1DF46991008A6A54 /* Controller */,
 				90AB89B01DF0220C001DC8DB /* Model */,
+				90AB89AF1DEF5311001DC8DB /* View */,
+				90F23B1A1DF46991008A6A54 /* Controller */,
 				90F60C9E1DEF4522009BB5D8 /* Frameworks */,
 				90F60C431DEEF708009BB5D8 /* Resources */,
 				9036DEAB1DED7E2800567827 /* AppDelegate.swift */,
 				9036DEAF1DED7E2800567827 /* Main.storyboard */,
 				9036DEB41DED7E2800567827 /* LaunchScreen.storyboard */,
 				9036DEB71DED7E2800567827 /* Info.plist */,
-				90AB89AF1DEF5311001DC8DB /* View */,
-				90F60C411DEE1FC1009BB5D8 /* Constants.swift */,
 			);
 			path = OnTheMap;
+			sourceTree = "<group>";
+		};
+		9074FDE61DF60E33004BC01C /* LocationView */ = {
+			isa = PBXGroup;
+			children = (
+				902533941DF4997200EE2F61 /* LocationMapViewController.swift */,
+				903C71711DF4D75D00B58CE5 /* LocationViewController.swift */,
+				903C71731DF4E1AC00B58CE5 /* LocationTableViewController.swift */,
+			);
+			name = LocationView;
+			sourceTree = "<group>";
+		};
+		9074FDE71DF60E4D004BC01C /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				9074FDE21DF59252004BC01C /* TextFieldDelegateViewController.swift */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		90AB89AF1DEF5311001DC8DB /* View */ = {
@@ -155,6 +172,7 @@
 		90AB89B01DF0220C001DC8DB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				90F60C411DEE1FC1009BB5D8 /* Constants.swift */,
 				90F23B161DF46377008A6A54 /* LocationDataSource.swift */,
 				90F23B181DF463FD008A6A54 /* StudentLocation.swift */,
 				9074FDE41DF60950004BC01C /* UdacityUser.swift */,
@@ -194,13 +212,11 @@
 		90F23B1A1DF46991008A6A54 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9074FDE71DF60E4D004BC01C /* Helper */,
+				9074FDE61DF60E33004BC01C /* LocationView */,
 				9036DEAD1DED7E2800567827 /* LoginViewController.swift */,
 				90A13E0E1DF43D6300F71FC2 /* TabBarViewController.swift */,
-				902533941DF4997200EE2F61 /* LocationMapViewController.swift */,
-				903C71711DF4D75D00B58CE5 /* LocationViewController.swift */,
-				903C71731DF4E1AC00B58CE5 /* LocationTableViewController.swift */,
 				9074FDE01DF5810B004BC01C /* PostLocationViewController.swift */,
-				9074FDE21DF59252004BC01C /* TextFieldDelegateViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
