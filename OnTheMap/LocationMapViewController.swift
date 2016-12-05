@@ -27,7 +27,7 @@ class LocationMapViewController: LocationViewController, MKMapViewDelegate {
         if pinView == nil {
             let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             annotationView.canShowCallout = true
-            annotationView.pinTintColor = .red
+            annotationView.pinTintColor = getPinColor()
             
             pinView = annotationView
         }
@@ -45,6 +45,17 @@ class LocationMapViewController: LocationViewController, MKMapViewDelegate {
         }
         
         return pinView
+    }
+    
+    // MARK: Map View Helper
+    
+    private var getPinColorCallCounter = 0
+    private var availablePinColors: [UIColor] = [.red, .green, .blue, .purple, .black, .orange, .brown, .magenta]
+    
+    private func getPinColor() -> UIColor {
+        let pinColor = availablePinColors[getPinColorCallCounter % availablePinColors.count]
+        getPinColorCallCounter += 1
+        return pinColor
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
