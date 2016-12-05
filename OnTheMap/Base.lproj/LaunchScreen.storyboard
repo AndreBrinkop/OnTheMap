@@ -9,8 +9,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Roboto-Regular.ttf">
-            <string>Roboto-Regular</string>
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
         </array>
     </customFonts>
     <scenes>
@@ -26,22 +26,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UdacityLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Qh6-PR-nMN">
-                                <rect key="frame" x="147.5" y="293.5" width="80" height="80"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On The Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGI-bl-rCS">
-                                <rect key="frame" x="141" y="395" width="92.5" height="20"/>
-                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="pQM-Wx-Kfg">
+                                <rect key="frame" x="142" y="274" width="92" height="120"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UdacityLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Qh6-PR-nMN">
+                                        <rect key="frame" x="0.0" y="0.0" width="92" height="80"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On The Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGI-bl-rCS">
+                                        <rect key="frame" x="0.0" y="100" width="92" height="20"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="qGI-bl-rCS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="BCl-wF-IMO"/>
-                            <constraint firstItem="Qh6-PR-nMN" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="FYt-Gv-ozx"/>
-                            <constraint firstItem="Qh6-PR-nMN" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="jae-j3-ZCd"/>
-                            <constraint firstItem="qGI-bl-rCS" firstAttribute="top" secondItem="Qh6-PR-nMN" secondAttribute="bottom" constant="21.5" id="tYZ-pb-eeh"/>
+                            <constraint firstItem="pQM-Wx-Kfg" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="9Sd-jt-38O"/>
+                            <constraint firstItem="pQM-Wx-Kfg" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="UIY-86-Hvh"/>
                         </constraints>
                     </view>
                 </viewController>
