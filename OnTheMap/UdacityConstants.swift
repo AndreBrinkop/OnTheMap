@@ -63,13 +63,4 @@ extension UdacityClient {
         static let firstname = "first_name"
         static let lastname = "last_name"
     }
-
-    
-    // MARK: Userdata
-    struct User {
-        var userId : String
-        var firstName : String
-        var lastName : String
-    }
-    
 }

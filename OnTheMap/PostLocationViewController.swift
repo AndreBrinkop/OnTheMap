@@ -146,9 +146,9 @@ class PostLocationViewController: TextFieldDelegateViewController {
             return
         }
         
-        let location = StudentLocation(id: locationDataSource.userData.userId, objectId: locationDataSource.knownObjectId, firstName: locationDataSource.userData.firstName, lastName: locationDataSource.userData.lastName, url: url, latitude: Float(selectedLocation!.latitude), longitude: Float(selectedLocation!.longitude))
+        let studentLocation = StudentLocation(udacityUser: locationDataSource.userData, location: selectedLocation!, url: url, objectId: locationDataSource.knownObjectId)
         
-        ParseClient.shared.postLocation(location: location) { (error: Error?) in
+        ParseClient.shared.postLocation(location: studentLocation) { (error: Error?) in
             guard error == nil else {
                 self.displayErrorMessage(title: "Your Location Could not be Posted", message: error!.localizedDescription)
                 return
@@ -157,7 +157,6 @@ class PostLocationViewController: TextFieldDelegateViewController {
             self.locationDataSource.updateData()
             self.dismiss(animated: true, completion: nil)
         }
-        
     }
     
     // MARK: Text Field Handling

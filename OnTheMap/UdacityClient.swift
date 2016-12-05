@@ -13,7 +13,7 @@ import FacebookLogin
 class UdacityClient {
     
     // MARK: Properties
-    private(set) var userData: User?
+    private(set) var userData: UdacityUser?
     private(set) var sessionId: String?
     private(set) var facebookToken: String?
     
@@ -116,7 +116,7 @@ class UdacityClient {
                     return
                 }
                 
-                self.userData = User(userId: userId, firstName: userName.0, lastName: userName.1)
+                self.userData = UdacityUser(userId: userId, firstName: userName.0, lastName: userName.1)
                 executeCompletionHandler(success: true, error: nil)
             }
             

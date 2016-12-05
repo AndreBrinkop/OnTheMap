@@ -120,37 +120,15 @@ class ParseClient {
         for result in results {
             
             // mandatory fields
-            guard let latitude = result[JSONResponseKeys.latitude] as? Float,
-                let longitude = result[JSONResponseKeys.longitude] as? Float,
-                let objectId = result[JSONResponseKeys.objectId] as? String
+            guard result[JSONResponseKeys.latitude] as? Float != nil,
+                result[JSONResponseKeys.longitude] as? Float != nil,
+                result[JSONResponseKeys.objectId] as? String != nil
             else {
                 // invalid entry
                 continue
             }
-            
-            var firstName = DefaultValues.firstName
-            var lastName = DefaultValues.lastName
-            var key = DefaultValues.key
-            var url: URL?
-            
-            if let parsedFirstName = result[JSONResponseKeys.firstName] as? String {
-                firstName = parsedFirstName
-            }
-            if let parsedLastName = result[JSONResponseKeys.lastName] as? String {
-                lastName = parsedLastName
-            }
-            if let parsedKey = result[JSONResponseKeys.key] as? String {
-                key = parsedKey
-            }
-            if let parsedUrl = result[JSONResponseKeys.url] as? String {
-                // check if URL is valid
-                if let urlObject = URL(string: parsedUrl), UIApplication.shared.canOpenURL(urlObject)
-                {
-                    url = urlObject
-                }
-            }
 
-            studentLocations.append(StudentLocation(id: key, objectId: objectId, firstName: firstName, lastName: lastName, url: url, latitude: latitude, longitude: longitude))
+            studentLocations.append(StudentLocation(dict: result as! [String : AnyObject]))
         }
         return studentLocations
     }

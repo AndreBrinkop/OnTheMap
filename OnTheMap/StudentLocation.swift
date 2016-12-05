@@ -7,9 +7,56 @@
 //
 
 import Foundation
+import UIKit
 import MapKit
 
 struct StudentLocation {
+    
+    // MARK: Initialization
+    
+    init(dict: [String : AnyObject]) {
+        // mandatory fields
+        latitude = dict[ParseClient.JSONResponseKeys.latitude] as! Float
+        longitude = dict[ParseClient.JSONResponseKeys.longitude] as! Float
+        objectId = dict[ParseClient.JSONResponseKeys.objectId] as! String?
+
+        // optional fields
+        firstName = ParseClient.DefaultValues.firstName
+        lastName = ParseClient.DefaultValues.lastName
+        id = ParseClient.DefaultValues.key
+        
+        if let parsedFirstName = dict[ParseClient.JSONResponseKeys.firstName] as? String {
+            firstName = parsedFirstName
+        }
+        if let parsedLastName = dict[ParseClient.JSONResponseKeys.lastName] as? String {
+            lastName = parsedLastName
+        }
+        if let parsedKey = dict[ParseClient.JSONResponseKeys.key] as? String {
+            id = parsedKey
+        }
+        if let parsedUrl = dict[ParseClient.JSONResponseKeys.url] as? String {
+            // check if URL is valid
+            if let urlObject = URL(string: parsedUrl), UIApplication.shared.canOpenURL(urlObject)
+            {
+                url = urlObject
+            }
+        }
+    }
+    
+    init(udacityUser: UdacityUser, location: CLLocationCoordinate2D, url: URL?, objectId: String?) {
+        id = udacityUser.userId
+        firstName = udacityUser.firstName
+        lastName = udacityUser.lastName
+        
+        latitude = Float(location.latitude)
+        longitude = Float(location.longitude)
+        
+        self.url = url
+        self.objectId = objectId
+    }
+    
+    // MARK: Properties
+    
     var id: String
     var objectId: String?
     var firstName: String
