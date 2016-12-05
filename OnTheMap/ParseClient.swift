@@ -56,7 +56,10 @@ class ParseClient {
         for result in results {
             
             // mandatory fields
-            guard let latitude = result[JSONResponseKeys.latitude] as? Float, let longitude = result[JSONResponseKeys.longitude] as? Float else {
+            guard let latitude = result[JSONResponseKeys.latitude] as? Float,
+                let longitude = result[JSONResponseKeys.longitude] as? Float,
+                let objectId = result[JSONResponseKeys.objectId] as? String
+            else {
                 // invalid entry
                 continue
             }
@@ -83,7 +86,7 @@ class ParseClient {
                 }
             }
 
-            studentLocations.append(StudentLocation(id: key, firstName: firstName, lastName: lastName, url: url, latitude: latitude, longitude: longitude))
+            studentLocations.append(StudentLocation(id: key, objectId: objectId, firstName: firstName, lastName: lastName, url: url, latitude: latitude, longitude: longitude))
         }
         
         return studentLocations.isEmpty ? nil : studentLocations
