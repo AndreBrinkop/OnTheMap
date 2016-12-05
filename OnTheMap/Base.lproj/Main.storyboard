@@ -38,13 +38,13 @@
                                 <rect key="frame" x="16" y="175.5" width="343" height="316"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="oZx-Ct-BgS" userLabel="Header Stack View">
-                                        <rect key="frame" x="109.5" y="0.0" width="124.5" height="120"/>
+                                        <rect key="frame" x="109" y="0.0" width="125.5" height="120"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UdacityLogo" translatesAutoresizingMaskIntoConstraints="NO" id="4GQ-bP-2bH">
-                                                <rect key="frame" x="22" y="0.0" width="80" height="80"/>
+                                                <rect key="frame" x="22.5" y="0.0" width="80" height="80"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to Udacity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hFc-M5-w4N">
-                                                <rect key="frame" x="0.0" y="100" width="124.5" height="20"/>
+                                                <rect key="frame" x="0.0" y="100" width="125.5" height="20"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -213,17 +213,35 @@
                                     <outlet property="delegate" destination="AEQ-T5-0Kl" id="e1M-11-do8"/>
                                 </connections>
                             </mapView>
+                            <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CUc-pz-PaR" userLabel="Loading Overlay View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="VHe-O5-gw2">
+                                        <rect key="frame" x="169" y="259" width="37" height="37"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="VHe-O5-gw2" firstAttribute="centerX" secondItem="CUc-pz-PaR" secondAttribute="centerX" id="1bX-SV-lYV"/>
+                                    <constraint firstItem="VHe-O5-gw2" firstAttribute="centerY" secondItem="CUc-pz-PaR" secondAttribute="centerY" id="Xtb-9o-9Du"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="qog-4D-8Nr" firstAttribute="top" secondItem="CUc-pz-PaR" secondAttribute="bottom" id="5dO-RL-LB0"/>
                             <constraint firstItem="1N5-sg-R2U" firstAttribute="leading" secondItem="KlL-HQ-OCb" secondAttribute="leading" id="5sm-zy-i6c"/>
                             <constraint firstAttribute="bottom" secondItem="1N5-sg-R2U" secondAttribute="bottom" id="JjT-SQ-Phz"/>
+                            <constraint firstAttribute="trailing" secondItem="CUc-pz-PaR" secondAttribute="trailing" id="Mwj-bX-TcY"/>
+                            <constraint firstItem="CUc-pz-PaR" firstAttribute="leading" secondItem="KlL-HQ-OCb" secondAttribute="leading" id="SYm-xS-qLE"/>
+                            <constraint firstItem="CUc-pz-PaR" firstAttribute="top" secondItem="ylj-tB-CFB" secondAttribute="bottom" id="coq-55-xl5"/>
                             <constraint firstAttribute="trailing" secondItem="1N5-sg-R2U" secondAttribute="trailing" id="dRy-Nk-CNl"/>
                             <constraint firstItem="1N5-sg-R2U" firstAttribute="top" secondItem="KlL-HQ-OCb" secondAttribute="top" id="qlp-II-Vqd"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="Map" id="ff9-zd-7Tz"/>
                     <connections>
+                        <outlet property="loadingOverlayView" destination="CUc-pz-PaR" id="Eyk-vn-J2b"/>
                         <outlet property="mapView" destination="1N5-sg-R2U" id="6kZ-hh-6U7"/>
                     </connections>
                 </viewController>

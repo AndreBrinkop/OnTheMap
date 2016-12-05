@@ -14,6 +14,7 @@ class LocationMapViewController: LocationViewController, MKMapViewDelegate {
     // MARK: Properties
     
     @IBOutlet var mapView: MKMapView!
+    @IBOutlet var loadingOverlayView: UIView!
     
     // MARK: Map View Delegate
     
@@ -80,11 +81,11 @@ class LocationMapViewController: LocationViewController, MKMapViewDelegate {
     // MARK: Loading Spinner
 
     override func showLoadingSpinner() {
-        // TODO
+        loadingOverlayView.isHidden = false
     }
     
     override func hideLoadingSpinner() {
-        // TODO
+        loadingOverlayView.isHidden = true
     }
 
 
