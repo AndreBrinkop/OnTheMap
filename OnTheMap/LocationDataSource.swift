@@ -31,6 +31,12 @@ class LocationDataSource: NSObject, UITableViewDataSource {
         self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateStarted)
         isRefreshing = true
         
+        if didUserAlreadyPostLocation {
+            // Do not need to check again
+            updateStudentLocations()
+            return
+        }
+        
         // Check if userId already posted location
         parseClient.getLastPostedLocationOfUser(userId: udacityClient.userData!.userId) { studentLocation, error in
             guard error == nil else {
@@ -41,24 +47,31 @@ class LocationDataSource: NSObject, UITableViewDataSource {
             self.didUserAlreadyPostLocation = studentLocation != nil
             
             // Get last posted Locations of all Users
-            self.parseClient.getLastPostedLocations() { (studentLocations, error) in
-                self.isRefreshing = false
-
-                guard let studentLocations = studentLocations, error == nil else {
-                    self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateFailed)
-                    return
-                }
-                
-                self.studentLocations = studentLocations
-                self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateCompleted)
+            self.updateStudentLocations()
+        }
+    }
+    
+    private func updateStudentLocations() {
+        // Get last posted Locations of all Users
+        self.parseClient.getLastPostedLocations() { (studentLocations, error) in
+            self.isRefreshing = false
+            
+            guard let studentLocations = studentLocations, error == nil else {
+                self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateFailed)
+                return
             }
+            
+            self.studentLocations = studentLocations
+            self.sendNotification(notificationName: ParseClient.Notifications.locationsUpdateCompleted)
         }
     }
     
     // MARK: Notifications
     
     private func sendNotification(notificationName: String) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationName), object: nil)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationName), object: nil)
+        }
     }
     
     // MARK: Table View Data Source
