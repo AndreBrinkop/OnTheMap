@@ -26,9 +26,13 @@ class PostLocationViewController: TextFieldDelegateViewController {
     @IBOutlet var mapView: MKMapView!
     
     @IBOutlet var confirmButton: CustomButton!
+    
+    let locationTextFieldText: String = "Enter Your Location Here"
+    let linkTextFieldText: String = "Enter a Link to Share Here"
     let locationConfirmButtonText: String = "Find on the Map"
     let linkConfirmButtonText: String = "Submit"
     
+    var selectedLocation: CLLocationCoordinate2D?
     
     // MARK: State Properties
     
@@ -46,6 +50,8 @@ class PostLocationViewController: TextFieldDelegateViewController {
     
     private func configureUI() {
         studyingLabel.textColor = Color.defaultColor
+        locationTextField.text = locationTextFieldText
+        linkTextField.text = linkTextFieldText
         
         if currentInputState == .locationInput {
             cancelButton.titleLabel?.textColor = Color.darkDefaultColor
@@ -76,6 +82,12 @@ class PostLocationViewController: TextFieldDelegateViewController {
 
     }
     
+    private func setCurrentInputState(state: InputState) {
+        currentInputState = state
+        configureUI()
+        confirmButton.stopSpinning()
+    }
+    
     // MARK: Actions
 
     @IBAction func cancel() {
@@ -83,16 +95,36 @@ class PostLocationViewController: TextFieldDelegateViewController {
     }
     
     @IBAction func confirm() {
-        
-        // TODO
         if currentInputState == .locationInput {
-            currentInputState = .urlInput
-        } else {
-            currentInputState = .locationInput
+            searchLocation()
         }
-        
-        configureUI()
-        
+    }
+    
+    func searchLocation() {
+        guard !locationTextField.text!.isEmpty, locationTextField.text != locationTextFieldText else {
+            displayErrorMessage(message: "Please enter a location!")
+            return
+        }
+
+        self.showLoadingSpinner()
+            
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(self.locationTextField.text!) { (results, error) in
+            DispatchQueue.main.async {
+                guard error == nil else {
+                    self.displayErrorMessage(message: "Something went wrong while geocoding.")
+                    return
+                }
+                guard let results = results, !results.isEmpty, let location = results[0].location else {
+                    self.displayErrorMessage(message: "No location was found. Please enter something else.")
+                    return
+                }
+
+                self.selectedLocation = location.coordinate
+                self.setCurrentInputState(state: .urlInput)
+                self.mapView.showAnnotations([MKPlacemark(placemark: results[0])], animated: true)
+            }
+        }
     }
     
     // MARK: Text Field Handling
@@ -100,6 +132,25 @@ class PostLocationViewController: TextFieldDelegateViewController {
     override func textFieldInputComplete() {
         super.textFieldInputComplete()
         confirm()
+    }
+    
+    // MARK: Loading Spinner
+    
+    func showLoadingSpinner() {
+        confirmButton.startSpinning()
+    }
+    
+    func hideLoadingSpinner() {
+        confirmButton.stopSpinning()
+    }
+    
+    // MARK: Helper
+    
+    func displayErrorMessage(message: String) {
+        hideLoadingSpinner()
+        let alertController = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     

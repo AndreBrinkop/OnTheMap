@@ -39,7 +39,7 @@ class TextFieldDelegateViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        guard let text = textField.text, text != "" else {
+        guard let text = textField.text, !text.isEmpty else {
             textField.resignFirstResponder()
             return false
         }
