@@ -13,7 +13,7 @@ class TabBarViewController: UITabBarController {
     // MARK: Properties
     
     private let dataSource = LocationDataSource.shared
-    
+    private let overwritePromtMessage = "You Have Already Posted a Student Location. Would You Like to Overwrite Your Current Location?"
     
     // MARK: Actions
     
@@ -29,11 +29,30 @@ class TabBarViewController: UITabBarController {
     }
     
     @IBAction func addLocation() {
-        
+        if dataSource.isRefreshing {
+            return
+        }
+        if dataSource.didUserAlreadyPostLocation {
+            displayOverwritePromt()
+            return
+        }
+        performSegue(withIdentifier: "postLocation", sender: nil)
     }
     
     @IBAction func refreshLocations() {
         dataSource.updateData()
+    }
+    
+    // MARK: Overwrite Promt
+    
+    private func displayOverwritePromt() {
+        let alertController = UIAlertController(title: "", message: overwritePromtMessage, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.default, handler: { action in
+            self.performSegue(withIdentifier: "postLocation", sender: nil)
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+
+        self.present(alertController, animated: true, completion: nil)
     }
     
 }

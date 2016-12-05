@@ -428,7 +428,6 @@ today?</string>
                             <barButtonItem image="Pin" id="1pT-Hj-mfd">
                                 <connections>
                                     <action selector="addLocation" destination="4qK-o1-6sb" id="fSh-Td-rJs"/>
-                                    <segue destination="oln-qN-aNC" kind="presentation" id="dcG-xm-HxC"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -441,6 +440,7 @@ today?</string>
                     <connections>
                         <segue destination="AEQ-T5-0Kl" kind="relationship" relationship="viewControllers" id="QP2-g8-ocm"/>
                         <segue destination="jKD-BH-aiE" kind="relationship" relationship="viewControllers" id="v8g-jb-6hF"/>
+                        <segue destination="oln-qN-aNC" kind="presentation" identifier="postLocation" id="HYa-Zm-UTD"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y9x-ps-DWQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
