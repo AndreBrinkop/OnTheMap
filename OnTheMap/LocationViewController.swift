@@ -23,6 +23,8 @@ class LocationViewController: UIViewController {
         
         if locationDataSource.isRefreshing {
             showLoadingSpinner()
+        } else {
+            hideLoadingSpinner()
         }
     }
     
