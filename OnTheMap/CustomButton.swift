@@ -83,13 +83,18 @@ class CustomButton: UIButton {
     // MARK: Activity Indicator
     
     func startSpinning() {
-        self.titleLabel?.layer.opacity = 0.0
-        activityIndicator.startAnimating()
+        DispatchQueue.main.async {
+            self.titleLabel?.layer.opacity = 0.0
+            self.activityIndicator.startAnimating()
+        }
     }
     
     func stopSpinning() {
-        self.titleLabel?.layer.opacity = 1.0
-        activityIndicator.stopAnimating()
+        DispatchQueue.main.async {
+            self.titleLabel?.layer.opacity = 1.0
+            self.activityIndicator.stopAnimating()
+        }
+
     }
 
 }
